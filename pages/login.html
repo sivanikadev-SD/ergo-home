@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <script>
+    (function(){
+      var t=localStorage.getItem('ergohome-theme');
+      document.documentElement.setAttribute('data-theme', t || 'dark');
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – ErgoHome</title>
+  <meta name="description" content="Log in to your ErgoHome account to access your ergonomic workspace dashboard, project designs, and consultations.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/premium-theme.css">
+  <link rel="stylesheet" href="../assets/css/mobile-fixes.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-6);
+      padding-top: calc(var(--nav-height) + var(--sp-8));
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, var(--color-primary-50) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, var(--color-secondary-50) 0%, transparent 70%);
+      z-index: 0;
+    }
+    .auth-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+    }
+    .auth-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-2xl);
+      padding: var(--sp-10);
+      box-shadow: var(--shadow-xl);
+      position:relative;
+      overflow:hidden;
+    }
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--brand-gradient);
+    }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-8);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .auth-logo .nav__logo-icon {
+      width: 48px; height: 48px;
+      font-size: 22px;
+    }
+    .auth-logo-text {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 800;
+    }
+    .auth-logo-text span { color: var(--brand-primary); }
+    .auth-title {
+      text-align: center;
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      margin-bottom: var(--sp-2);
+    }
+    .auth-subtitle {
+      text-align: center;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--sp-8);
+    }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      margin-block: var(--sp-6);
+      color: var(--text-muted);
+      font-size: var(--text-xs);
+    }
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+    .auth-social-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3);
+    }
+    .auth-social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+      padding: var(--sp-3) var(--sp-4);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      background: var(--bg-surface);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      min-height: 44px;
+    }
+    .auth-social-btn:hover {
+      background: var(--bg-muted);
+      border-color: var(--color-neutral-300);
+      transform: translateY(-1px);
+    }
+    .auth-social-btn i { font-size: 18px; }
+    .auth-footer {
+      text-align: center;
+      margin-top: var(--sp-6);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .auth-footer a {
+      color: var(--brand-primary);
+      font-weight: 600;
+    }
+    .auth-footer a:hover { text-decoration: underline; }
+    .remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-6);
+    }
+    .remember-row a {
+      font-size: var(--text-sm);
+      color: var(--brand-primary);
+      font-weight: 500;
+    }
+    .remember-row a:hover { text-decoration: underline; }
+    .auth-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      pointer-events: none;
+      animation: blobFloat 8s ease-in-out infinite;
+    }
+    .auth-blob--1 {
+      width: 400px; height: 400px;
+      background: var(--color-primary-400);
+      top: -100px; right: -80px;
+    }
+    .auth-blob--2 {
+      width: 300px; height: 300px;
+      background: var(--color-secondary-400);
+      bottom: -80px; left: -60px;
+      animation-delay: 3s;
+    }
+    @keyframes blobFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(15px, -20px) scale(1.05); }
+      66% { transform: translate(-10px, 10px) scale(0.95); }
+    }
+
+    @media (max-width: 640px) {
+      .auth-card { padding: var(--sp-8) var(--sp-6); }
+      .auth-social-btns { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating blobs -->
+<div class="auth-blob auth-blob--1" aria-hidden="true"></div>
+<div class="auth-blob auth-blob--2" aria-hidden="true"></div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo"><div class="nav__logo-icon"><i class="ri-armchair-line"></i></div><span class="nav__logo-text">Ergo<span>Home</span></span></a>
+    <div class="nav__links">
+      <a href="../index.html"  class="nav__link"><i class="ri-home-line"></i>Home</a>
+      <a href="../index2.html" class="nav__link"><i class="ri-sparkling-fill"></i>Home 2</a>
+      <a href="about.html"    class="nav__link"><i class="ri-information-line"></i>About</a>
+      <a href="services.html" class="nav__link"><i class="ri-service-line"></i>Services</a>
+      <a href="blog.html"     class="nav__link"><i class="ri-article-line"></i>Blog</a>
+      <a href="booking.html"  class="nav__link"><i class="ri-calendar-line"></i>Book a Call</a>
+      <a href="contact.html"  class="nav__link"><i class="ri-mail-line"></i>Contact</a>
+    </div>
+    <div class="nav__actions">
+      <button class="rtl-toggle btn btn--ghost btn--sm" title="Switch Language/Direction"><i class="ri-translate-2"></i> <span class="rtl-toggle-text">RTL</span></button>
+      <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
+      <a href="login.html" class="btn btn--primary btn--sm"><i class="ri-login-circle-line"></i>Login</a>
+      <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav__mobile">
+  <a href="../index.html"  class="nav__mobile-link"><i class="ri-home-line"></i>Home</a>
+  <a href="../index2.html" class="nav__mobile-link"><i class="ri-sparkling-fill"></i>Home 2</a>
+  <a href="about.html"    class="nav__mobile-link"><i class="ri-information-line"></i>About</a>
+  <a href="services.html" class="nav__mobile-link"><i class="ri-service-line"></i>Services</a>
+  <a href="blog.html"     class="nav__mobile-link"><i class="ri-article-line"></i>Blog</a>
+  <a href="booking.html"  class="nav__mobile-link"><i class="ri-calendar-line"></i>Book a Call</a>
+  <a href="contact.html"  class="nav__mobile-link"><i class="ri-mail-line"></i>Contact</a>
+  <div style="margin-top:var(--sp-6);padding-top:var(--sp-6);border-top:1px solid var(--border-color);display:flex;flex-direction:column;gap:var(--sp-4)">
+    <a href="login.html" class="btn btn--primary btn--full"><i class="ri-login-circle-line"></i>Login</a>
+    <a href="register.html" class="btn btn--secondary btn--full"><i class="ri-user-add-line"></i>Register</a>
+  </div>
+</div>
+
+<main id="main-content">
+  <section class="auth-page">
+    <div class="auth-container">
+      <div class="auth-card">
+        <a href="../index.html" class="auth-logo">
+          <div class="nav__logo-icon"><i class="ri-armchair-line"></i></div>
+          <div class="auth-logo-text">Ergo<span>Home</span></div>
+        </a>
+
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Sign in to access your ergonomic workspace dashboard</p>
+
+        <!-- Social Login -->
+        <div class="auth-social-btns">
+          <button class="auth-social-btn" type="button"><i class="ri-google-fill" style="color:#ea4335"></i> Google</button>
+          <button class="auth-social-btn" type="button"><i class="ri-apple-fill"></i> Apple</button>
+        </div>
+
+        <div class="auth-divider">or continue with email</div>
+
+        <!-- Login Form -->
+        <form class="js-login-form" data-validate novalidate>
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address <span class="required">*</span></label>
+            <div class="form-input-wrap"><i class="ri-mail-line form-icon"></i><input type="email" id="login-email" name="email" class="form-input" placeholder="you@example.com" required></div>
+            <div class="form-error" style="display:none"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password <span class="required">*</span></label>
+            <div class="form-input-wrap" style="position:relative"><i class="ri-lock-line form-icon"></i><input type="password" id="login-password" name="password" class="form-input" placeholder="••••••••" required minlength="6" style="padding-left:40px;padding-right:44px"><button type="button" class="password-toggle" onclick="togglePassword('login-password', this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px" aria-label="Show password"><i class="ri-eye-line"></i></button></div>
+            <div class="form-error" style="display:none"></div>
+          </div>
+          <div class="remember-row">
+            <label class="form-check" style="margin:0">
+              <input type="checkbox" name="remember">
+              <span class="form-check-label">Remember me</span>
+            </label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full btn--lg"><i class="ri-login-circle-line"></i> Sign In</button>
+        </form>
+
+        <div class="auth-footer">
+          Don't have an account? <a href="register.html">Create one free</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast-container" role="alert" aria-live="polite"></div>
+<script src="../assets/js/main.js"></script>
+<script>
+  function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.className = 'ri-eye-off-line';
+    } else {
+      input.type = 'password';
+      icon.className = 'ri-eye-line';
+    }
+  }
+
+  document.querySelectorAll('.js-login-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!FormValidator.validateForm(form)) return;
+      const btn = form.querySelector('[type="submit"]');
+      btn.classList.add('loading');
+      btn.disabled = true;
+      await new Promise(r => setTimeout(r, 1500));
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      Toast.show('Login successful! Redirecting to dashboard…', 'success');
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <script>
+    (function(){
+      var t=localStorage.getItem('ergohome-theme');
+      document.documentElement.setAttribute('data-theme', t || 'dark');
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Portal – ErgoHome Dashboard</title>
+  <meta name="description" content="Your ErgoHome client portal. Complete your ergonomic assessment, review 3D design proposals, and approve your curated shopping list.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/premium-theme.css">
+  <link rel="stylesheet" href="../assets/css/mobile-fixes.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    :root { --sidebar-width: 280px; }
+    body { overflow-x: hidden; }
+
+    /* ---- Dashboard Layout ---- */
+    .dashboard-layout { display: flex; min-height: 100vh; }
+
+    /* ---- Sidebar ---- */
+    .dashboard-sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-color);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: var(--z-sticky);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      transition: transform var(--transition-normal);
+    }
+    .sidebar-logo {
+      display: flex; align-items: center; gap: var(--sp-3);
+      padding: var(--sp-5) var(--sp-6);
+      font-family: var(--font-display); font-size: var(--text-xl); font-weight: 800;
+      border-bottom: 1px solid var(--border-color);
+      text-decoration: none; color: var(--text-primary);
+    }
+    .sidebar-logo-icon { width: 36px; height: 36px; background: var(--brand-gradient); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; }
+    .sidebar-logo-text span { color: var(--brand-primary); }
+    .sidebar-user {
+      padding: var(--sp-4) var(--sp-6);
+      border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; gap: var(--sp-3);
+    }
+    .sidebar-user img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+    .sidebar-user-name { font-weight: 700; font-size: var(--text-sm); }
+    .sidebar-user-role { font-size: var(--text-xs); color: var(--text-muted); }
+    .sidebar-user span.online { width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block; margin-left: 4px; }
+
+    .sidebar-nav { padding: var(--sp-4) var(--sp-4); flex: 1; }
+    .sidebar-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); padding: var(--sp-3) var(--sp-3) var(--sp-2); }
+    .sidebar-link {
+      display: flex; align-items: center; gap: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm); font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      margin-bottom: 2px;
+      position: relative;
+    }
+    .sidebar-link:hover { background: var(--bg-muted); color: var(--text-primary); }
+    .sidebar-link.active { background: var(--color-primary-50); color: var(--brand-primary); font-weight: 600; }
+    .sidebar-link i { font-size: 18px; width: 22px; flex-shrink: 0; }
+    .sidebar-link .badge { margin-left: auto; }
+    .sidebar-bottom {
+      padding: var(--sp-4) var(--sp-6);
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* ---- Main Content ---- */
+    .dashboard-main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-height: 100vh;
+      background: var(--bg-base);
+    }
+
+    /* ---- Top Bar ---- */
+    .dashboard-topbar {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: var(--sp-4) var(--sp-8);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: var(--z-above);
+    }
+    .topbar-title { font-size: var(--text-lg); font-weight: 700; }
+    .topbar-actions { display: flex; align-items: center; gap: var(--sp-3); }
+    .notif-btn { position: relative; width: 40px; height: 40px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-surface); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 18px; transition: all var(--transition-fast); }
+    .notif-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+    .notif-badge { position: absolute; top: -4px; right: -4px; width: 18px; height: 18px; background: var(--color-accent-rose); color: white; border-radius: 50%; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-surface); }
+    .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 340px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); z-index: var(--z-dropdown); display: none; overflow: hidden; }
+    .notif-dropdown.open { display: block; animation: fadeIn 0.2s ease; }
+    .notif-header { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-4) var(--sp-5); border-bottom: 1px solid var(--border-color); }
+    .notif-item { display: flex; align-items: flex-start; gap: var(--sp-3); padding: var(--sp-4) var(--sp-5); border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background var(--transition-fast); }
+    .notif-item:hover { background: var(--bg-muted); }
+    .notif-item.unread { background: var(--color-primary-50); }
+    .notif-item:last-child { border-bottom: none; }
+    .notif-icon { width: 36px; height: 36px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+
+    /* ---- Dashboard Sections ---- */
+    .dashboard-content { padding: var(--sp-8); }
+    .dashboard-section { display: none; }
+    .dashboard-section.active { display: block; animation: fadeIn 0.25s ease; }
+    .section-title { font-size: var(--text-2xl); font-weight: 800; margin-bottom: var(--sp-2); }
+    .section-subtitle { color: var(--text-secondary); margin-bottom: var(--sp-8); }
+
+    /* ---- Overview Widgets ---- */
+    .widget-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-5); margin-bottom: var(--sp-8); }
+    .widget { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: var(--sp-5); }
+    .widget-icon { width: 44px; height: 44px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: var(--sp-4); }
+    .widget-label { font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--sp-1); text-transform: uppercase; letter-spacing: 0.06em; }
+    .widget-value { font-size: var(--text-2xl); font-weight: 800; font-family: var(--font-display); }
+    .widget-change { font-size: var(--text-xs); margin-top: var(--sp-1); display: flex; align-items: center; gap: 4px; }
+    .widget-change.up { color: #10b981; }
+    .widget-change.pending { color: var(--color-accent-amber); }
+
+    .project-timeline { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: var(--sp-6); margin-bottom: var(--sp-6); }
+    .progress-steps { display: flex; justify-content: space-between; position: relative; padding-top: var(--sp-2); }
+    .progress-steps::before { content: ''; position: absolute; top: 22px; left: 5%; right: 5%; height: 3px; background: var(--border-color); border-radius: 3px; }
+    .progress-fill { position: absolute; top: 22px; left: 5%; height: 3px; background: var(--brand-gradient); border-radius: 3px; width: 58%; transition: width 1s ease; }
+    .pstep { text-align: center; position: relative; z-index: 1; }
+    .pstep-dot { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--border-color); background: var(--bg-surface); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--sp-3); font-size: 18px; transition: all var(--transition-normal); }
+    .pstep.done .pstep-dot { border-color: var(--brand-primary); background: var(--brand-primary); color: white; }
+    .pstep.active .pstep-dot { border-color: var(--brand-primary); color: var(--brand-primary); box-shadow: 0 0 0 4px var(--color-primary-100); }
+    .pstep-label { font-size: 11px; font-weight: 600; color: var(--text-muted); max-width: 70px; margin: 0 auto; }
+    .pstep.done .pstep-label, .pstep.active .pstep-label { color: var(--brand-primary); }
+
+    /* ---- Assessment ---- */
+    .quiz-step-title { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--sp-6); padding-bottom: var(--sp-4); border-bottom: 1px solid var(--border-color); }
+    .quiz-progress-wrap { margin-bottom: var(--sp-6); }
+    .quiz-progress-track { height: 6px; background: var(--border-color); border-radius: 3px; overflow: hidden; }
+    .quiz-progress-bar { height: 100%; background: var(--brand-gradient); border-radius: 3px; width: 0%; transition: width var(--transition-slow); }
+    .quiz-step-counter { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--sp-2); }
+    .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: 1px solid var(--border-color); }
+    .quiz-checks-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-3); }
+    .quiz-check-card { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-4); border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); cursor: pointer; transition: all var(--transition-fast); font-size: var(--text-sm); }
+    .quiz-check-card:hover { border-color: var(--brand-primary); }
+    .quiz-check-card.checked { border-color: var(--brand-primary); background: var(--color-primary-50); color: var(--brand-primary); }
+    .quiz-check-card i { font-size: 18px; }
+    .quiz-check-card.checked i { color: var(--brand-primary); }
+    .quiz-styles-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--sp-3); }
+    .quiz-style-card { padding: var(--sp-4) var(--sp-5); border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); cursor: pointer; text-align: left; background: var(--bg-surface); transition: all var(--transition-fast); font-size: var(--text-sm); }
+    .quiz-style-card:hover { border-color: var(--brand-primary); }
+    .quiz-style-card.selected { border-color: var(--brand-primary); background: var(--color-primary-50); }
+
+    /* ---- 3D Design Viewer ---- */
+    .design-3d-preview {
+      width: 100%; aspect-ratio: 16/7;
+      background: linear-gradient(135deg, var(--design-color, #0ea472) 0%, var(--color-secondary-500) 100%);
+      border-radius: var(--radius-xl);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 64px;
+      margin-bottom: var(--sp-4);
+      position: relative;
+      overflow: hidden;
+    }
+    .design-3d-preview::before {
+      content: ''; position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&auto=format&fit=crop&q=80') center/cover;
+      opacity: 0.35;
+    }
+    .design-3d-preview i { position: relative; z-index: 1; }
+    .design-thumbs { display: flex; gap: var(--sp-3); margin-bottom: var(--sp-6); }
+    .design-thumb { padding: var(--sp-3) var(--sp-4); border: 2px solid var(--border-color); border-radius: var(--radius-lg); cursor: pointer; font-size: var(--text-sm); font-weight: 600; transition: all var(--transition-fast); flex: 1; text-align: center; }
+    .design-thumb.active, .design-thumb:hover { border-color: var(--brand-primary); background: var(--color-primary-50); color: var(--brand-primary); }
+    .design-features li { display: flex; align-items: center; gap: var(--sp-3); padding-block: var(--sp-2); border-bottom: 1px solid var(--border-color); font-size: var(--text-sm); }
+    .design-features li:last-child { border-bottom: none; }
+    .design-features i { font-size: 16px; flex-shrink: 0; }
+
+    /* ---- Shopping List ---- */
+    .shopping-table { width: 100%; border-collapse: collapse; }
+    .shopping-table th { text-align: left; font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--border-color); }
+    .shopping-table td { padding: var(--sp-4); border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+    .shopping-table tr:last-child td { border-bottom: none; }
+    .shopping-table tr.item-approved { background: var(--color-primary-50); }
+    .shopping-table tr:hover td { background: var(--bg-muted); }
+    .item-name { font-weight: 600; font-size: var(--text-sm); }
+
+    .list-summary { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: var(--sp-6); display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-4); margin-bottom: var(--sp-6); text-align: center; }
+    .list-summary-item .label { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: var(--sp-1); }
+    .list-summary-item .value { font-size: var(--text-2xl); font-weight: 800; font-family: var(--font-display); }
+
+    /* ---- Overlay/Mobile ---- */
+    .dashboard-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: calc(var(--z-sticky) - 1); }
+    .sidebar-toggle { display: none; background: none; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: var(--sp-2); cursor: pointer; color: var(--text-primary); font-size: 20px; }
+
+    @media(max-width:1024px){
+      .dashboard-sidebar { transform: translateX(-100%); }
+      .dashboard-sidebar.open { transform: translateX(0); }
+      .dashboard-overlay.active { display: block; }
+      .dashboard-main { margin-left: 0; }
+      .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+      .widget-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media(max-width:640px){
+      .widget-grid { grid-template-columns: 1fr; }
+      .dashboard-content { padding: var(--sp-4); }
+      .dashboard-topbar { padding: var(--sp-4); }
+      .quiz-checks-grid, .quiz-styles-grid { grid-template-columns: 1fr; }
+      .list-summary { grid-template-columns: 1fr; }
+      .shopping-table { font-size: var(--text-xs); }
+      .design-thumbs { flex-direction: column; }
+    }
+    #logout-btn:hover:not(:disabled) {
+      background: rgba(239,68,68,0.2) !important;
+      border-color: rgba(239,68,68,0.5) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(239,68,68,0.2);
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="dashboard-overlay" id="dash-overlay"></div>
+
+<div class="dashboard-layout">
+
+  <!-- ============================================================
+       SIDEBAR
+       ============================================================ -->
+  <aside class="dashboard-sidebar" id="dash-sidebar" role="navigation" aria-label="Dashboard navigation">
+    <a href="../index.html" class="sidebar-logo">
+      <div class="sidebar-logo-icon"><i class="ri-armchair-line"></i></div>
+      <span class="sidebar-logo-text">Ergo<span>Home</span></span>
+    </a>
+    <div style="padding:0 var(--sp-6) var(--sp-4);display:flex;gap:var(--sp-2)">
+      <a href="../index.html" class="btn btn--ghost btn--xs" title="Home V1"><i class="ri-home-line"></i></a>
+      <a href="../index2.html" class="btn btn--ghost btn--xs" title="Home V2"><i class="ri-sparkling-fill"></i></a>
+    </div>
+
+    <div class="sidebar-user">
+      <img src="https://i.pravatar.cc/80?img=32" alt="Sarah K.">
+      <div>
+        <div class="sidebar-user-name">Sarah K. <span class="online"></span></div>
+        <div class="sidebar-user-role">Professional Plan Client</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div>
+      <a href="#overview" class="sidebar-link active" id="sl-overview"><i class="ri-dashboard-line"></i> Overview</a>
+      <a href="#assessment" class="sidebar-link" id="sl-assessment"><i class="ri-clipboard-line"></i> Assessment <span class="badge badge--warning">In Progress</span></a>
+      <a href="#designs" class="sidebar-link" id="sl-designs"><i class="ri-layout-masonry-line"></i> My Designs <span class="badge badge--primary">3</span></a>
+      <a href="#shopping" class="sidebar-link" id="sl-shopping"><i class="ri-shopping-bag-line"></i> Shopping List</a>
+
+      <div class="sidebar-section-label" style="margin-top:var(--sp-4)">Account</div>
+      <a href="#messages" class="sidebar-link" id="sl-messages"><i class="ri-message-3-line"></i> Messages <span class="badge badge--error">2</span></a>
+      <a href="#profile"  class="sidebar-link" id="sl-profile"><i class="ri-user-line"></i> My Profile</a>
+      <a href="#settings" class="sidebar-link" id="sl-settings"><i class="ri-settings-3-line"></i> Settings</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div style="display:flex;gap:var(--sp-3);align-items:center;justify-content:space-between;margin-bottom:var(--sp-3)">
+        <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
+        <button class="rtl-toggle btn btn--ghost btn--sm" title="Toggle RTL"><i class="ri-translate-2"></i></button>
+        <a href="../index.html" class="btn btn--ghost btn--sm"><i class="ri-external-link-line"></i> Main Site</a>
+      </div>
+      <button id="logout-btn" onclick="handleLogout()" class="btn btn--full" style="background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.25);border-radius:var(--radius-lg);font-weight:600;font-size:var(--text-sm);display:flex;align-items:center;justify-content:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-4);width:100%;cursor:pointer;transition:all 0.2s ease">
+        <i class="ri-logout-box-r-line"></i> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main class="dashboard-main" id="main-content">
+
+    <!-- Top Bar -->
+    <div class="dashboard-topbar">
+      <div style="display:flex;align-items:center;gap:var(--sp-4)">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open sidebar"><i class="ri-menu-2-line"></i></button>
+        <div class="topbar-title" id="topbar-title">Overview</div>
+      </div>
+      <div class="topbar-actions">
+        <div style="position:relative">
+          <button class="notif-btn notif-btn" aria-label="Notifications" aria-haspopup="true">
+            <i class="ri-notification-3-line"></i>
+            <div class="notif-badge">2</div>
+          </button>
+          <div class="notif-dropdown" id="notif-dropdown"></div>
+        </div>
+        <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
+        <img src="https://i.pravatar.cc/40?img=32" alt="Sarah K." style="width:36px;height:36px;border-radius:50%;object-fit:cover;cursor:pointer;border:2px solid var(--brand-primary)">
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+
+      <!-- ============================================================
+           SECTION: OVERVIEW
+           ============================================================ -->
+      <div class="dashboard-section active" id="overview">
+        <h1 class="section-title">Welcome back, Sarah 👋</h1>
+        <p class="section-subtitle">Here's a snapshot of your ErgoHome project. Your design proposal is ready!</p>
+
+        <!-- Widgets -->
+        <div class="widget-grid">
+          <div class="widget">
+            <div class="widget-icon" style="background:var(--color-primary-100);color:var(--color-primary-600)"><i class="ri-clipboard-line"></i></div>
+            <div class="widget-label">Assessment</div>
+            <div class="widget-value">60%</div>
+            <div class="widget-change pending"><i class="ri-time-line"></i> In progress</div>
+          </div>
+          <div class="widget">
+            <div class="widget-icon" style="background:var(--color-secondary-100);color:var(--color-secondary-600)"><i class="ri-layout-masonry-line"></i></div>
+            <div class="widget-label">Design Proposals</div>
+            <div class="widget-value">3</div>
+            <div class="widget-change up"><i class="ri-arrow-up-line"></i> Ready to view</div>
+          </div>
+          <div class="widget">
+            <div class="widget-icon" style="background:#fef3c7;color:#d97706"><i class="ri-shopping-bag-line"></i></div>
+            <div class="widget-label">Shopping Items</div>
+            <div class="widget-value">8</div>
+            <div class="widget-change pending"><i class="ri-time-line"></i> Awaiting approval</div>
+          </div>
+          <div class="widget">
+            <div class="widget-icon" style="background:#d1fae5;color:#059669"><i class="ri-calendar-check-line"></i></div>
+            <div class="widget-label">Next Check-in</div>
+            <div class="widget-value" style="font-size:var(--text-lg)">March 22</div>
+            <div class="widget-change up"><i class="ri-video-line"></i> Zoom · 9:00 AM</div>
+          </div>
+        </div>
+
+        <!-- Project Timeline -->
+        <div class="project-timeline" data-reveal>
+          <h3 style="margin-bottom:var(--sp-8)">Project Progress</h3>
+          <div class="progress-steps">
+            <div class="progress-fill"></div>
+            <div class="pstep done"><div class="pstep-dot"><i class="ri-check-line"></i></div><div class="pstep-label">Free Call</div></div>
+            <div class="pstep done"><div class="pstep-dot"><i class="ri-check-line"></i></div><div class="pstep-label">Assessment Started</div></div>
+            <div class="pstep active"><div class="pstep-dot"><i class="ri-clipboard-line"></i></div><div class="pstep-label">Design Review</div></div>
+            <div class="pstep"><div class="pstep-dot"><i class="ri-shopping-bag-line"></i></div><div class="pstep-label">Shopping Approval</div></div>
+            <div class="pstep"><div class="pstep-dot"><i class="ri-tools-line"></i></div><div class="pstep-label">Setup & Enjoy</div></div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)">
+          <div class="card" style="text-align:center;padding:var(--sp-8);cursor:pointer" onclick="DashboardSections.show('assessment')">
+            <div style="width:56px;height:56px;background:var(--color-primary-100);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--brand-primary);margin:0 auto var(--sp-4)"><i class="ri-clipboard-line"></i></div>
+            <h4 style="margin-bottom:var(--sp-2)">Complete Assessment</h4>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary)">3 steps remaining to finish your ergonomic profile</p>
+            <div style="margin-top:var(--sp-4)"><span class="badge badge--warning">60% complete</span></div>
+          </div>
+          <div class="card" style="text-align:center;padding:var(--sp-8);cursor:pointer" onclick="DashboardSections.show('designs')">
+            <div style="width:56px;height:56px;background:var(--color-secondary-100);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--color-secondary-600);margin:0 auto var(--sp-4)"><i class="ri-layout-masonry-line"></i></div>
+            <h4 style="margin-bottom:var(--sp-2)">Review 3D Designs</h4>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary)">3 design proposals are ready and waiting for your review</p>
+            <div style="margin-top:var(--sp-4)"><span class="badge badge--primary">New designs!</span></div>
+          </div>
+          <div class="card" style="text-align:center;padding:var(--sp-8);cursor:pointer" onclick="DashboardSections.show('shopping')">
+            <div style="width:56px;height:56px;background:#fef3c7;border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;font-size:26px;color:#d97706;margin:0 auto var(--sp-4)"><i class="ri-shopping-bag-line"></i></div>
+            <h4 style="margin-bottom:var(--sp-2)">Approve Shopping List</h4>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary)">Review and approve your curated product recommendations</p>
+            <div style="margin-top:var(--sp-4);font-size:var(--text-sm);font-weight:700">Est. total: $3,403</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SECTION: ASSESSMENT
+           ============================================================ -->
+      <div class="dashboard-section" id="assessment">
+        <h1 class="section-title">Ergonomic Assessment</h1>
+        <p class="section-subtitle">Complete all 6 steps to receive your personalized ergonomic profile and design brief.</p>
+
+        <!-- Progress Bar -->
+        <div class="quiz-progress-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-2)">
+            <span class="quiz-step-counter">Step 1 of 6</span>
+            <span style="font-size:var(--text-xs);color:var(--text-muted)">Estimated 8 minutes</span>
+          </div>
+          <div class="quiz-progress-track"><div class="quiz-progress-bar"></div></div>
+        </div>
+
+        <!-- Step indicators -->
+        <div class="steps" style="margin-bottom:var(--sp-8)">
+          <div class="step active"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-line"></div></div>
+          <div class="step"><div class="step-num">6</div></div>
+        </div>
+
+        <div class="card" id="assessment-quiz" style="padding:var(--sp-8)">
+          <div style="text-align:center;padding:var(--sp-12)">
+            <div style="font-size:48px;margin-bottom:var(--sp-4)">📋</div>
+            <h3 style="margin-bottom:var(--sp-3)">Loading your assessment…</h3>
+            <div class="skeleton skeleton-text" style="width:60%;margin:0 auto"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SECTION: DESIGNS
+           ============================================================ -->
+      <div class="dashboard-section" id="designs">
+        <h1 class="section-title">3D Design Proposals</h1>
+        <p class="section-subtitle">Our team has prepared 3 personalized workspace concepts for your review. Select, request revisions, or approve.</p>
+
+        <div id="design-viewer">
+          <div class="design-thumbs">
+            <button class="design-thumb active" onclick="DesignViewer.select(0)">Design 1 — Minimalist</button>
+            <button class="design-thumb" onclick="DesignViewer.select(1)">Design 2 — Scandinavian</button>
+            <button class="design-thumb" onclick="DesignViewer.select(2)">Design 3 — Executive</button>
+          </div>
+
+          <div class="design-3d-preview" style="--design-color:#0ea472;">
+            <i class="ri-building-2-line" style="font-size:72px;opacity:0.8"></i>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:var(--sp-8);margin-bottom:var(--sp-6)">
+            <div>
+              <div style="display:flex;align-items:center;gap:var(--sp-3);margin-bottom:var(--sp-3)">
+                <h3 class="design-name" style="font-size:var(--text-xl)">Minimalist Standing Office</h3>
+                <span class="badge badge--warning design-status">Pending Approval</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-4)">
+                <span style="font-size:var(--text-sm);color:var(--text-muted)"><i class="ri-palette-line"></i> Style: <strong class="design-style">Minimalist</strong></span>
+                <span style="font-size:var(--text-sm);color:var(--text-muted)"><i class="ri-heart-pulse-line"></i> Ergonomic Score: <strong class="design-score gradient-text">94%</strong></span>
+              </div>
+              <h4 style="margin-bottom:var(--sp-3);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)">Key Features</h4>
+              <ul class="design-features"></ul>
+            </div>
+
+            <div>
+              <h4 style="margin-bottom:var(--sp-4)">Ergonomic Score</h4>
+              <div data-progress-ring="94" style="margin-bottom:var(--sp-5)"></div>
+              <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+                <button class="btn btn--primary btn--full" onclick="DesignViewer.approve()"><i class="ri-checkbox-circle-line"></i> Approve Design</button>
+                <button class="btn btn--ghost btn--full" onclick="DesignViewer.requestRevision()"><i class="ri-edit-line"></i> Request Revision</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SECTION: SHOPPING LIST
+           ============================================================ -->
+      <div class="dashboard-section" id="shopping">
+        <h1 class="section-title">Curated Shopping List</h1>
+        <p class="section-subtitle">Review each recommended product. Approve items individually or approve all at once to initiate the procurement process.</p>
+
+        <div id="shopping-list">
+          <!-- Summary Cards -->
+          <div class="list-summary">
+            <div class="list-summary-item"><div class="label">Total Items</div><div class="value">8</div></div>
+            <div class="list-summary-item"><div class="label">Approved Items</div><div class="value approved-count gradient-text">0</div></div>
+            <div class="list-summary-item"><div class="label">Approved Total</div><div class="value list-approved-total gradient-text">$0</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-4);flex-wrap:wrap;gap:var(--sp-3)">
+            <div style="font-size:var(--text-sm);color:var(--text-secondary)">Full list total: <strong class="list-total">$3,403</strong> · Avg partner discount: 15%</div>
+            <div style="display:flex;gap:var(--sp-3)">
+              <button class="btn btn--ghost btn--sm" onclick="ShoppingList.exportList()"><i class="ri-download-line"></i> Export CSV</button>
+              <button class="btn btn--primary btn--sm" onclick="ShoppingList.approveAll()"><i class="ri-checkbox-circle-fill"></i> Approve All</button>
+            </div>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <table class="shopping-table">
+              <thead><tr><th></th><th>Product</th><th>Category</th><th>Priority</th><th>Price</th><th>Approval</th></tr></thead>
+              <tbody class="shopping-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SECTION: MESSAGES
+           ============================================================ -->
+      <div class="dashboard-section" id="messages">
+        <h1 class="section-title">Messages</h1>
+        <p class="section-subtitle">Chat with your ErgoHome design team and consultant.</p>
+        <div class="card" style="max-width:700px">
+          <div style="border-bottom:1px solid var(--border-color);padding-bottom:var(--sp-4);margin-bottom:var(--sp-4)">
+            <div style="display:flex;align-items:center;gap:var(--sp-3)">
+              <img src="https://i.pravatar.cc/40?img=47" alt="Dr. Amanda Lee" style="width:40px;height:40px;border-radius:50%;border:2px solid var(--brand-primary)">
+              <div><div style="font-weight:700">Dr. Amanda Lee</div><div style="font-size:var(--text-xs);color:#10b981">● Online</div></div>
+            </div>
+          </div>
+          <div style="min-height:300px;padding-block:var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-4)">
+            <div style="display:flex;gap:var(--sp-3)"><img src="https://i.pravatar.cc/40?img=47" alt="" style="width:32px;height:32px;border-radius:50%;flex-shrink:0"><div style="background:var(--bg-muted);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:var(--sp-3) var(--sp-4);max-width:70%;font-size:var(--text-sm)">Hi Sarah! Your design proposals are ready. Please have a look when you get a chance and let me know your thoughts 🎉</div></div>
+            <div style="display:flex;gap:var(--sp-3);flex-direction:row-reverse"><img src="https://i.pravatar.cc/40?img=32" alt="" style="width:32px;height:32px;border-radius:50%;flex-shrink:0"><div style="background:var(--brand-gradient);color:white;border-radius:var(--radius-lg) 0 var(--radius-lg) var(--radius-lg);padding:var(--sp-3) var(--sp-4);max-width:70%;font-size:var(--text-sm)">Wow they look amazing! Just reviewing Design 1 now — love the minimalist approach!</div></div>
+            <div style="display:flex;gap:var(--sp-3)"><img src="https://i.pravatar.cc/40?img=47" alt="" style="width:32px;height:32px;border-radius:50%;flex-shrink:0"><div style="background:var(--bg-muted);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:var(--sp-3) var(--sp-4);max-width:70%;font-size:var(--text-sm)">Glad to hear it! Have you had a chance to look at the shopping list? Some of those items have limited availability so it would be good to approve soon.</div></div>
+          </div>
+          <form style="display:flex;gap:var(--sp-3);padding-top:var(--sp-4);border-top:1px solid var(--border-color)" onsubmit="sendMsg(event)">
+            <input type="text" class="form-input" placeholder="Type a message…" id="msg-input" style="flex:1">
+            <button type="submit" class="btn btn--primary"><i class="ri-send-plane-fill"></i></button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SECTION: PROFILE
+           ============================================================ -->
+      <div class="dashboard-section" id="profile">
+        <h1 class="section-title">My Profile</h1>
+        <p class="section-subtitle">Manage your account details and preferences.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);max-width:800px">
+          <div class="card">
+            <div style="text-align:center;padding-bottom:var(--sp-6);border-bottom:1px solid var(--border-color);margin-bottom:var(--sp-6)">
+              <img src="https://i.pravatar.cc/100?img=32" alt="Profile photo" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:var(--sp-4);border:3px solid var(--brand-primary)">
+              <h3>Sarah K.</h3>
+              <p style="font-size:var(--text-sm);color:var(--text-muted)">Professional Plan</p>
+            </div>
+            <div class="form-group"><label class="form-label" for="p-fname">First Name</label><input class="form-input" id="p-fname" type="text" value="Sarah"></div>
+            <div class="form-group"><label class="form-label" for="p-lname">Last Name</label><input class="form-input" id="p-lname" type="text" value="K."></div>
+            <div class="form-group"><label class="form-label" for="p-email">Email</label><div class="form-input-wrap"><i class="ri-mail-line form-icon"></i><input class="form-input" id="p-email" type="email" value="sarah@company.com"></div></div>
+            <button class="btn btn--primary btn--full">Save Changes</button>
+          </div>
+          <div class="card">
+            <h4 style="margin-bottom:var(--sp-5)">Plan Details</h4>
+            <div style="background:var(--brand-gradient);border-radius:var(--radius-xl);padding:var(--sp-5);color:white;margin-bottom:var(--sp-5)">
+              <div style="font-size:var(--text-xs);opacity:.75;text-transform:uppercase;letter-spacing:.06em;margin-bottom:var(--sp-2)">Current Plan</div>
+              <div style="font-size:var(--text-2xl);font-weight:800">Professional</div>
+              <div style="font-size:var(--text-sm);opacity:.85;margin-top:var(--sp-1)">$1,297 · One-time</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm)"><span>Assessment</span><span class="badge badge--warning">In Progress</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm)"><span>3D Design Proposals</span><span class="badge badge--primary">3 Ready</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm)"><span>Shopping List</span><span class="badge badge--neutral">8 Items</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm)"><span>Video Consultation</span><span class="badge badge--success" style="background:#d1fae5;color:#065f46">Scheduled</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm)"><span>Support Expires</span><span style="font-weight:600">April 15, 2025</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SECTION: SETTINGS
+           ============================================================ -->
+      <div class="dashboard-section" id="settings">
+        <h1 class="section-title">Settings</h1>
+        <p class="section-subtitle">Control your portal preferences and notifications.</p>
+        <div class="card" style="max-width:600px">
+          <h4 style="margin-bottom:var(--sp-5)">Appearance</h4>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-block:var(--sp-4);border-bottom:1px solid var(--border-color)">
+            <div><div style="font-weight:600;font-size:var(--text-sm)">Dark Mode</div><div style="font-size:var(--text-xs);color:var(--text-muted)">Toggle between light and dark theme</div></div>
+            <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-block:var(--sp-4);border-bottom:1px solid var(--border-color)">
+            <div><div style="font-weight:600;font-size:var(--text-sm)">RTL Layout</div><div style="font-size:var(--text-xs);color:var(--text-muted)">Enable right-to-left for Arabic / Hebrew</div></div>
+            <button class="rtl-toggle btn btn--ghost btn--sm"><i class="ri-align-right"></i> Toggle RTL</button>
+          </div>
+          <div style="padding-top:var(--sp-6)">
+            <h4 style="margin-bottom:var(--sp-5)">Notifications</h4>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+              <label class="form-check"><input type="checkbox" checked><span class="form-check-label">Email me when a new design proposal is ready</span></label>
+              <label class="form-check"><input type="checkbox" checked><span class="form-check-label">Email me when a consultant sends a message</span></label>
+              <label class="form-check"><input type="checkbox"><span class="form-check-label">Weekly project status digest</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dashboard-content -->
+  </main>
+</div>
+
+<div class="toast-container" role="alert" aria-live="polite"></div>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/dashboard.js"></script>
+<script>
+  /* Sidebar links → section navigation */
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = link.getAttribute('href')?.replace('#','');
+      if(!id) return;
+      DashboardSections.show(id);
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      const titles = {overview:'Overview',assessment:'Ergonomic Assessment',designs:'3D Design Proposals',shopping:'Shopping List',messages:'Messages',profile:'My Profile',settings:'Settings'};
+      document.getElementById('topbar-title').textContent = titles[id]||'Dashboard';
+      if(window.innerWidth < 1024){
+        document.getElementById('dash-sidebar').classList.remove('open');
+        document.getElementById('dash-overlay').classList.remove('active');
+      }
+    });
+  });
+
+  /* Message send */
+  function sendMsg(e){
+    e.preventDefault();
+    const inp = document.getElementById('msg-input');
+    if(!inp.value.trim()) return;
+    const chat = inp.closest('form').previousElementSibling;
+    const bubble = document.createElement('div');
+    bubble.style.cssText='display:flex;gap:var(--sp-3);flex-direction:row-reverse';
+    bubble.innerHTML = `<img src="https://i.pravatar.cc/40?img=32" alt="" style="width:32px;height:32px;border-radius:50%;flex-shrink:0"><div style="background:var(--brand-gradient);color:white;border-radius:var(--radius-lg) 0 var(--radius-lg) var(--radius-lg);padding:var(--sp-3) var(--sp-4);max-width:70%;font-size:var(--text-sm)">${inp.value}</div>`;
+    chat.appendChild(bubble);
+    chat.scrollTop = chat.scrollHeight;
+    inp.value = '';
+  }
+
+  /* ── Logout ── */
+  function handleLogout() {
+    const btn = document.getElementById('logout-btn');
+    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ri-loader-4-line" style="animation:spin 1s linear infinite"></i> Logging out…'; }
+
+    // Show toast via existing Toast module if available, else fallback
+    const msg = 'You have been logged out successfully. Redirecting…';
+    if (window.ErgoHome && window.ErgoHome.Toast) {
+      window.ErgoHome.Toast.show(msg, 'success');
+    } else {
+      // Inline fallback toast
+      const toast = document.createElement('div');
+      toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:#10b981;color:white;padding:14px 20px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.25);animation:slideUp .35s cubic-bezier(.22,1,.36,1)';
+      toast.innerHTML = '<i class="ri-checkbox-circle-fill" style="font-size:20px"></i>' + msg;
+      document.body.appendChild(toast);
+      setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity .4s'; setTimeout(() => toast.remove(), 400); }, 3000);
+    }
+
+    // Redirect to login after 2 seconds
+    setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+/* ==========================================================================
+   ErgoHome - RTL (Right-to-Left) Support
+   Applies when [dir="rtl"] is set on <html> or <body>
+   ========================================================================== */
+
+[dir="rtl"] {
+  /* Flip text alignment for block-level elements */
+  text-align: right;
+}
+
+/* Navigation */
+[dir="rtl"] .nav__inner {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .nav__links {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .nav__actions {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .nav__logo {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .nav__mobile-link {
+  flex-direction: row-reverse;
+}
+
+/* Hero Section */
+[dir="rtl"] .hero__content {
+  direction: rtl;
+}
+[dir="rtl"] .hero__floating-card--1 { left: auto; right: -5%; }
+[dir="rtl"] .hero__floating-card--2 { right: auto; left: -5%; }
+[dir="rtl"] .hero__floating-card { flex-direction: row-reverse; }
+[dir="rtl"] .hero__actions { flex-direction: row-reverse; }
+[dir="rtl"] .hero__social-proof { flex-direction: row-reverse; }
+[dir="rtl"] .hero__avatars { flex-direction: row-reverse; }
+[dir="rtl"] .hero__avatar { margin-left: 0; margin-right: -10px; }
+[dir="rtl"] .hero__avatar:first-child { margin-right: 0; }
+
+/* Buttons */
+[dir="rtl"] .btn {
+  flex-direction: row-reverse;
+}
+
+/* Form elements */
+[dir="rtl"] .form-label { text-align: right; }
+[dir="rtl"] .form-input-wrap .form-icon { left: auto; right: 14px; }
+[dir="rtl"] .form-input-wrap .form-input { padding-left: 1rem; padding-right: 40px; }
+[dir="rtl"] .form-check { flex-direction: row-reverse; }
+[dir="rtl"] .form-error { flex-direction: row-reverse; }
+[dir="rtl"] .form-hint { text-align: right; }
+
+/* Cards */
+[dir="rtl"] .card {
+  text-align: right;
+}
+
+/* Section headers */
+[dir="rtl"] .section-header { text-align: center; }
+[dir="rtl"] .section-header__eyebrow {
+  flex-direction: row-reverse;
+}
+
+/* Accordion */
+[dir="rtl"] .accordion-header {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+/* Tabs */
+[dir="rtl"] .tabs-nav { flex-direction: row-reverse; }
+
+/* Stats */
+[dir="rtl"] .stats-grid { direction: rtl; }
+
+/* Steps / Stepper */
+[dir="rtl"] .steps { flex-direction: row-reverse; }
+[dir="rtl"] .step { flex-direction: row-reverse; }
+[dir="rtl"] .step-label { text-align: right; }
+
+/* Footer */
+[dir="rtl"] .footer__grid { direction: rtl; }
+[dir="rtl"] .footer__logo { flex-direction: row-reverse; }
+[dir="rtl"] .footer__link { text-align: right; }
+[dir="rtl"] .footer__socials { flex-direction: row-reverse; }
+[dir="rtl"] .footer__bottom { flex-direction: row-reverse; }
+
+/* Testimonials */
+[dir="rtl"] .testimonial-card__author { flex-direction: row-reverse; }
+[dir="rtl"] .testimonial-card__quote::before { text-align: right; }
+
+/* Blog cards */
+[dir="rtl"] .blog-card__meta { flex-direction: row-reverse; }
+[dir="rtl"] .blog-card__body { text-align: right; }
+
+/* Toast */
+[dir="rtl"] .toast-container { right: auto; left: var(--sp-6); }
+[dir="rtl"] .toast { flex-direction: row-reverse; border-left: none; border-right: 4px solid var(--brand-primary); }
+[dir="rtl"] .toast--success { border-right-color: #10b981; border-left: 1px solid var(--border-color); }
+[dir="rtl"] .toast--error   { border-right-color: var(--color-accent-rose); border-left: 1px solid var(--border-color); }
+[dir="rtl"] .toast--warning { border-right-color: var(--color-accent-amber); border-left: 1px solid var(--border-color); }
+
+/* Navigation floating / dropdown items */
+[dir="rtl"] .nav__link { flex-direction: row-reverse; }
+
+/* Grids - already flex/grid auto flow, direction handles it */
+[dir="rtl"] .flex { flex-direction: row-reverse; }
+[dir="rtl"] .flex-col { flex-direction: column; }
+
+/* Hero social proof / eye brow */
+[dir="rtl"] .hero__eyebrow { flex-direction: row-reverse; }
+[dir="rtl"] .badge { flex-direction: row-reverse; }
+
+/* Dashboard-specific RTL */
+[dir="rtl"] .dashboard-sidebar { right: 0; left: auto; border-right: none; border-left: 1px solid var(--border-color); }
+[dir="rtl"] .dashboard-main { margin-right: 280px; margin-left: 0; }
+[dir="rtl"] .sidebar-link { flex-direction: row-reverse; }
+[dir="rtl"] .progress-bar { direction: ltr; } /* keep ltr for progress fill */
+
+/* Bento Grid RTL */
+[dir="rtl"] .bento-item { text-align: right; }
+[dir="rtl"] .bento-item__icon { left: auto; right: var(--sp-8); }
+[dir="rtl"] .bento-item--2x2 img { right: auto; left: 0; transform: scaleX(-1); }
+
+/* Creative Hero RTL */
+[dir="rtl"] .hero-creative__content { text-align: right; }
+[dir="rtl"] .hero-creative__subtitle { margin-inline: 0 auto; }
+[dir="rtl"] .hero__actions { justify-content: flex-start; }
+
+@media (max-width: 1024px) {
+  [dir="rtl"] .nav__mobile {
+    transform: translateX(100%);
+  }
+  [dir="rtl"] .nav__mobile.open {
+    transform: translateX(0);
+  }
+  [dir="rtl"] .dashboard-main { margin-right: 0; }
+}
+
+@media (max-width: 640px) {
+  [dir="rtl"] .toast-container { left: var(--sp-4); right: var(--sp-4); }
+}

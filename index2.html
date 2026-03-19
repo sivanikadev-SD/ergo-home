@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <script>
+    (function () {
+      var t = localStorage.getItem('ergohome-theme');
+      document.documentElement.setAttribute('data-theme', t || 'dark');
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ErgoHome – Design Your Flow (Creative Edition)</title>
+  <meta name="description"
+    content="Experience the creative approach to ergonomic workspace design. Where science meets sanctuary.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/premium-theme.css">
+  <link rel="stylesheet" href="assets/css/mobile-fixes.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <style>
+    /* ── Page-specific overrides ── */
+
+    /* Marquee ticker */
+    .marquee-track {
+      overflow: hidden;
+    }
+
+    .marquee-inner {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 28s linear infinite;
+      gap: 60px;
+      align-items: center;
+    }
+
+    @keyframes marqueeScroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--text-muted);
+    }
+
+    .marquee-item i {
+      color: var(--brand-primary);
+      font-size: 16px;
+    }
+
+    .marquee-sep {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--border-accent);
+      flex-shrink: 0;
+    }
+
+    /* Outline heading */
+    .text-outline {
+      -webkit-text-stroke: 1.5px var(--text-primary);
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    [data-theme="light"] .text-outline {
+      -webkit-text-stroke: 1.5px var(--text-primary);
+    }
+
+    /* Floating metric chip */
+    .metric-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-md);
+      animation: chipFloat 5s ease-in-out infinite alternate;
+    }
+
+    .metric-chip i {
+      color: var(--brand-primary);
+      font-size: 14px;
+    }
+
+    @keyframes chipFloat {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-8px);
+      }
+    }
+
+    .metric-chip:nth-child(2) {
+      animation-delay: 1.5s;
+    }
+
+    .metric-chip:nth-child(3) {
+      animation-delay: 0.8s;
+    }
+
+    /* Hero image frame */
+    .hero2-img-frame {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border-accent);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35), 0 0 0 1px var(--border-accent);
+    }
+
+    [data-theme="dark"] .hero2-img-frame {
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(34, 211, 238, 0.15), 0 0 60px rgba(34, 211, 238, 0.06);
+    }
+
+    [data-theme="light"] .hero2-img-frame {
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(59, 130, 246, 0.12);
+    }
+
+    .hero2-img-frame img {
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero2-img-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, var(--bg-base) 100%);
+    }
+
+    /* Floating absolute cards on the hero image */
+    .floating-badge {
+      position: absolute;
+      z-index: 10;
+      background: var(--card-bg);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      padding: 10px 14px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .floating-badge i {
+      color: var(--brand-primary);
+    }
+
+    .floating-badge--tl {
+      top: 20px;
+      left: -20px;
+      animation: chipFloat 4s ease-in-out infinite alternate;
+    }
+
+    .floating-badge--br {
+      bottom: 30px;
+      right: -10px;
+      animation: chipFloat 5.5s ease-in-out infinite alternate-reverse;
+    }
+
+    /* Mood switcher */
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .mood-card {
+      padding: 20px;
+      border-radius: 16px;
+      cursor: pointer;
+      border: 2px solid var(--border-color);
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: center;
+    }
+
+    .mood-card .card-icon {
+      margin: 0 auto 12px;
+    }
+
+    .mood-card h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .mood-card p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .mood-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-3px);
+    }
+
+    .mood-card.active {
+      background: var(--grad-primary);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .mood-card.active p,
+    .mood-card.active h3 {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .mood-card.active .card-icon {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Mood preview image */
+    .mood-preview {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border-color);
+    }
+
+    .mood-preview img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      transition: filter 0.7s ease;
+    }
+
+    .mood-overlay {
+      position: absolute;
+      inset: 0;
+      transition: background 0.5s ease;
+      mix-blend-mode: overlay;
+    }
+
+    /* Process timeline */
+    .process-steps {
+      position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      bottom: 24px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--brand-primary), transparent);
+      border-radius: 2px;
+    }
+
+    .process-step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding-bottom: 40px;
+      position: relative;
+    }
+
+    .process-step:last-child {
+      padding-bottom: 0;
+    }
+
+    .process-step__num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--card-bg);
+      border: 2px solid var(--brand-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--brand-primary);
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
+    }
+
+    [data-theme="light"] .process-step__num {
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+    }
+
+    .process-step__content {
+      flex: 1;
+      padding-top: 8px;
+    }
+
+    .process-step__title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .process-step__desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    /* Service feature row */
+    .service-feature {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .service-feature:hover {
+      border-color: var(--border-accent);
+      transform: translateX(4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .service-feature__icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      border-radius: 13px;
+      background: var(--color-primary-50);
+      border: 1px solid var(--color-primary-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: var(--brand-primary);
+    }
+
+    .service-feature__title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .service-feature__desc {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+    }
+
+    /* Quote block */
+    .big-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .big-quote .highlight {
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Parallax marquee text */
+    .parallax-text {
+      font-size: clamp(5rem, 15vw, 12rem);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: var(--bg-muted);
+      white-space: nowrap;
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      text-transform: uppercase;
+      user-select: none;
+      font-family: var(--font-display);
+      transition: color 0.3s ease;
+    }
+
+    [data-theme="dark"] .parallax-text {
+      color: rgba(255, 255, 255, 0.025);
+    }
+
+    [data-theme="light"] .parallax-text {
+      color: rgba(0, 0, 0, 0.04);
+    }
+
+    /* CTA section glow */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    [data-theme="light"] .cta-section::before {
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
+    }
+
+    /* Grid helpers */
+    .cols-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .cols-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .cols-2-3 {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+
+      .cols-2,
+      .cols-2-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero2-img-frame {
+        display: none;
+      }
+
+      .floating-badge {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .mood-grid,
+      .cols-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .mood-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cols-3 {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="preloader">
+    <div class="preloader-spinner"></div>
+  </div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="nav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon"><i class="ri-armchair-line"></i></div>
+        <span class="nav__logo-text">Ergo<span>Home</span></span>
+      </a>
+
+      <div class="nav__links">
+        <a href="index.html" class="nav__link" role="listitem"><i class="ri-home-line"></i>Home</a>
+        <a href="index2.html" class="nav__link active" role="listitem"><i class="ri-sparkling-fill"></i>Home 2</a>
+        <a href="pages/about.html" class="nav__link" role="listitem"><i class="ri-information-line"></i>About</a>
+        <a href="pages/services.html" class="nav__link" role="listitem"><i class="ri-service-line"></i>Services</a>
+        <a href="pages/blog.html" class="nav__link" role="listitem"><i class="ri-article-line"></i>Blog</a>
+        <a href="pages/booking.html" class="nav__link" role="listitem"><i class="ri-calendar-line"></i>Book a Call</a>
+        <a href="pages/contact.html" class="nav__link" role="listitem"><i class="ri-mail-line"></i>Contact</a>
+        <a href="pages/dashboard.html" class="nav__link" role="listitem"><i class="ri-dashboard-line"></i>Dashboard</a>
+      </div>
+
+      <div class="nav__actions">
+        <button class="rtl-toggle btn btn--ghost btn--sm" title="Switch Language/Direction"><i
+            class="ri-translate-2"></i> <span class="rtl-toggle-text">RTL</span></button>
+        <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i
+            class="ri-moon-line icon-moon"></i></button>
+        <a href="pages/login.html" class="btn btn--primary btn--sm"><i class="ri-login-circle-line"></i>Login</a>
+        <button class="nav__hamburger" aria-label="Menu"><span class="nav__hamburger-line"></span><span
+            class="nav__hamburger-line"></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="nav__mobile">
+    <div class="nav__mobile-links">
+      <a href="index.html" class="nav__mobile-link"><i class="ri-home-line"></i>Home</a>
+      <a href="index2.html" class="nav__mobile-link active"><i class="ri-sparkling-fill"></i>Home 2</a>
+      <a href="pages/about.html" class="nav__mobile-link">Our Story</a>
+      <a href="pages/services.html" class="nav__mobile-link">Workshops</a>
+      <a href="pages/blog.html" class="nav__mobile-link">Magazine</a>
+      <a href="pages/contact.html" class="nav__mobile-link">Connect</a>
+      <a href="pages/dashboard.html" class="nav__mobile-link"><i class="ri-dashboard-line"></i>Dashboard</a>
+      <div style="padding:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-4)">
+        <button class="rtl-toggle btn btn--ghost btn--full"><i class="ri-translate-2"></i> Toggle RTL</button>
+        <a href="pages/login.html" class="btn btn--primary btn--full"><i class="ri-login-circle-line"></i>Login</a>
+        <a href="pages/register.html" class="btn btn--secondary btn--full"><i class="ri-user-add-line"></i>Register</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       HERO: CINEMATIC SPLIT
+       ============================================================ -->
+  <section class="hero-creative"
+    style="padding-top:calc(var(--nav-height) + 60px); padding-bottom: 60px; min-height: 95svh; align-items: center;">
+    <!-- Ambient blobs -->
+    <div class="hero-creative__bg">
+      <div class="hero__blob--1"></div>
+      <div class="hero__blob--2"></div>
+    </div>
+    <!-- Parallax marquee text -->
+    <div class="parallax-text" id="pt1" style="top:15%;left:-5%">ERGO</div>
+    <div class="parallax-text" id="pt2" style="bottom:10%;right:-5%;font-size:clamp(4rem,12vw,10rem)">FLOW</div>
+
+    <div class="hero-creative__content container">
+      <div class="cols-2" style="gap:60px">
+        <!-- Left: text -->
+        <div>
+          <span class="badge badge--gradient" data-reveal style="margin-bottom:20px">
+            <i class="ri-sparkling-2-fill"></i> Work Redefined
+          </span>
+          <h1 class="hero-creative__title" data-reveal style="margin-bottom:24px">
+            <span style="display:block">Design Your</span>
+            <span class="gradient-text" style="display:block">Inner Flow</span>
+            <span class="text-outline" style="display:block">Symmetry</span>
+          </h1>
+          <p class="hero-creative__subtitle" data-reveal data-reveal-delay="1" style="margin-bottom:32px">
+            Your desk is not just furniture; it's the cockpit of your productivity. We blend biometric data with
+            aesthetic sanctuary to build your peak performance environment.
+          </p>
+
+          <!-- Metric chips -->
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px" data-reveal data-reveal-delay="1">
+            <div class="metric-chip"><i class="ri-pulse-line"></i>Bio-feedback analysis</div>
+            <div class="metric-chip" style="animation-delay:1.5s"><i class="ri-focus-3-line"></i>Focus optimised</div>
+            <div class="metric-chip" style="animation-delay:0.8s"><i class="ri-leaf-line"></i>Biophilic elements</div>
+          </div>
+
+          <div class="hero__actions" data-reveal data-reveal-delay="2">
+            <a href="pages/booking.html" class="btn btn--primary btn--lg">Book Discovery Call <i
+                class="ri-cursor-line"></i></a>
+            <a href="#bento" class="btn btn--ghost btn--lg">Explore the System <i class="ri-arrow-down-line"></i></a>
+          </div>
+        </div>
+
+        <!-- Right: framed image + floating badges -->
+        <div style="position:relative" data-reveal data-reveal-delay="2">
+          <div class="floating-badge floating-badge--tl">
+            <i class="ri-award-fill"></i> 500+ Spaces Designed
+          </div>
+          <div class="hero2-img-frame">
+            <img src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=900&auto=format&fit=crop&q=80"
+              alt="Premium Ergonomic Workspace" loading="lazy">
+          </div>
+          <div class="floating-badge floating-badge--br">
+            <i class="ri-heart-pulse-fill"></i> 94% Pain Reduction
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MARQUEE TICKER
+       ============================================================ -->
+  <div class="marquee-track"
+    style="padding:18px 0;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);overflow:hidden">
+    <div class="marquee-inner">
+      <!-- Repeated twice for seamless loop -->
+      <span class="marquee-item"><i class="ri-body-scan-line"></i>Kinetic Posture Tracking</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-compass-3-line"></i>Circadian Lighting</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-brain-line"></i>Cognitive Ergonomics</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-leaf-line"></i>Biophilic Design</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-broadcast-line"></i>Acoustic Shielding</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-temp-hot-line"></i>Climate Harmonics</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-layout-masonry-line"></i>3D Space Planning</span>
+      <span class="marquee-sep"></span>
+      <!-- Duplicate for loop -->
+      <span class="marquee-item"><i class="ri-body-scan-line"></i>Kinetic Posture Tracking</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-compass-3-line"></i>Circadian Lighting</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-brain-line"></i>Cognitive Ergonomics</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-leaf-line"></i>Biophilic Design</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-broadcast-line"></i>Acoustic Shielding</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-temp-hot-line"></i>Climate Harmonics</span>
+      <span class="marquee-sep"></span>
+      <span class="marquee-item"><i class="ri-layout-masonry-line"></i>3D Space Planning</span>
+      <span class="marquee-sep"></span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BENTO GRID: THE ECOSYSTEM
+       ============================================================ -->
+  <section class="section" id="bento">
+    <div class="container">
+      <div
+        style="max-width:none;text-align:left;display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:16px">
+        <div>
+          <span class="section-header__eyebrow">The Ergo Ecosystem</span>
+          <h2 style="margin-bottom:0">Science Meets <span class="gradient-text">Sanctuary</span></h2>
+        </div>
+        <p style="max-width:380px;margin-bottom:0;color:var(--text-secondary)">Every component of our designs is backed
+          by kinetic research and sensory psychology.</p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Item 1: Posture (2×2) -->
+        <div class="bento-item bento-item--2x2 bento-item--dark" data-reveal>
+          <div class="bento-item__icon"><i class="ri-body-scan-line"></i></div>
+          <div class="bento-item__content">
+            <h3 class="bento-item__title">Kinetic Posture Tracking</h3>
+            <p class="bento-item__text">Our designs adapt to your body's micro-movements throughout the day, preventing
+              strain before it begins.</p>
+            <div style="margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+              <div style="height:4px;background:rgba(255,255,255,0.9);border-radius:2px"></div>
+              <div style="height:4px;background:rgba(255,255,255,0.3);border-radius:2px"></div>
+              <div style="height:4px;background:rgba(255,255,255,0.15);border-radius:2px"></div>
+            </div>
+            <div
+              style="margin-top:20px;display:flex;align-items:center;gap:8px;font-size:0.82rem;color:rgba(255,255,255,0.7)">
+              <i class="ri-checkbox-circle-fill" style="color:rgba(255,255,255,0.9)"></i>
+              Real-time biometric feedback
+            </div>
+          </div>
+          <img src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=600&auto=format&fit=crop&q=60" alt=""
+            style="position:absolute;top:0;right:0;width:200px;opacity:0.15;mask-image:linear-gradient(to left, white, transparent);-webkit-mask-image:linear-gradient(to left, white, transparent)">
+        </div>
+
+        <!-- Item 2: Video (1×2) -->
+        <div class="bento-item bento-item--1x2 bento-item--video" data-reveal data-reveal-delay="1"
+          style="padding:0;background:#000;display:flex;align-items:center;justify-content:center">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&auto=format&fit=crop&q=60" alt=""
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.7">
+          <button class="play-btn" aria-label="Play design video"
+            style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:26px;position:relative;z-index:1;box-shadow:0 12px 32px rgba(0,0,0,0.3);border:none;cursor:pointer;transition:transform 0.2s ease"
+            onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <i class="ri-play-fill" style="margin-left:3px"></i>
+          </button>
+          <div style="position:absolute;bottom:20px;left:20px;z-index:1;color:white">
+            <div style="font-weight:700;font-size:0.9rem;text-shadow:0 2px 4px rgba(0,0,0,0.5)">Client Story</div>
+            <div style="font-size:0.78rem;opacity:0.8">"The Focus Lab"</div>
+          </div>
+        </div>
+
+        <!-- Item 3: Lighting (2×1) -->
+        <div class="bento-item bento-item--2x1" data-reveal data-reveal-delay="2">
+          <div class="bento-item__icon"><i class="ri-compass-3-line"></i></div>
+          <div class="bento-item__content">
+            <h3 class="bento-item__title">Circadian Lighting Integration</h3>
+            <p class="bento-item__text">Automated lighting systems that sync with your internal clock to maintain peak
+              cortisol levels.</p>
+          </div>
+        </div>
+
+        <!-- Item 4: Sound (1×1) -->
+        <div class="bento-item bento-item--1x1" data-reveal data-reveal-delay="3">
+          <div class="bento-item__icon" style="color:var(--rose)"><i class="ri-broadcast-line"></i></div>
+          <div class="bento-item__content">
+            <h3 class="bento-item__title">Acoustic Shielding</h3>
+            <p class="bento-item__text" style="font-size:0.82rem;margin-top:4px">Engineered quiet zones that isolate
+              harmful frequencies.</p>
+          </div>
+        </div>
+
+        <!-- Item 5: Plants (1×1) -->
+        <div class="bento-item bento-item--1x1" data-reveal data-reveal-delay="4">
+          <div class="bento-item__icon" style="color:var(--green)"><i class="ri-leaf-line"></i></div>
+          <div class="bento-item__content">
+            <h3 class="bento-item__title">Biophilic Design</h3>
+            <p class="bento-item__text" style="font-size:0.82rem;margin-top:4px">Living walls and curated botanics
+              reduce cognitive fatigue.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROCESS TIMELINE + SERVICES
+       ============================================================ -->
+  <section class="section bg-muted">
+    <div class="container">
+      <div class="cols-2-3" style="gap:60px">
+        <!-- Left: Process steps -->
+        <div>
+          <span class="section-header__eyebrow">How It Works</span>
+          <h2 style="margin-bottom:36px">Your Journey to <span class="gradient-text">Peak Flow</span></h2>
+
+          <div class="process-steps">
+            <div class="process-step" data-reveal>
+              <div class="process-step__num">01</div>
+              <div class="process-step__content">
+                <div class="process-step__title">Biometric Assessment</div>
+                <p class="process-step__desc">We analyse your posture patterns, pain points, and daily workflow through
+                  a detailed health questionnaire and video consultation.</p>
+              </div>
+            </div>
+            <div class="process-step" data-reveal data-reveal-delay="1">
+              <div class="process-step__num">02</div>
+              <div class="process-step__content">
+                <div class="process-step__title">3D Space Design</div>
+                <p class="process-step__desc">Our designers craft an immersive 3D model of your workspace, optimising
+                  every square foot for movement, light, and sensory comfort.</p>
+              </div>
+            </div>
+            <div class="process-step" data-reveal data-reveal-delay="2">
+              <div class="process-step__num">03</div>
+              <div class="process-step__content">
+                <div class="process-step__title">Curated Sourcing</div>
+                <p class="process-step__desc">We handpick every product from our verified supplier network — from
+                  sit-stand desks to biophilic planters — and deliver a complete shopping list.</p>
+              </div>
+            </div>
+            <div class="process-step" data-reveal data-reveal-delay="3">
+              <div class="process-step__num">04</div>
+              <div class="process-step__content">
+                <div class="process-step__title">White-Glove Setup</div>
+                <p class="process-step__desc">Our certified ergo specialists visit your space, install everything,
+                  calibrate your setup, and provide a personalised usage guide.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Service features -->
+        <div>
+          <span class="section-header__eyebrow">What You Get</span>
+          <h2 style="margin-bottom:28px">Everything in <span class="gradient-text">One Package</span></h2>
+
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="service-feature" data-reveal>
+              <div class="service-feature__icon"><i class="ri-pulse-line"></i></div>
+              <div>
+                <div class="service-feature__title">Bio-Harmonic Analysis</div>
+                <p class="service-feature__desc">60-minute video session with a certified ergonomist. Posture scoring,
+                  pain-map, and cognitive workload profiling.</p>
+              </div>
+            </div>
+            <div class="service-feature" data-reveal data-reveal-delay="1">
+              <div class="service-feature__icon"><i class="ri-cube-3d-line"></i></div>
+              <div>
+                <div class="service-feature__title">Immersive 3D Rendering</div>
+                <p class="service-feature__desc">Photorealistic renders of your future workspace so you can walk through
+                  it before a single piece of furniture ships.</p>
+              </div>
+            </div>
+            <div class="service-feature" data-reveal data-reveal-delay="2">
+              <div class="service-feature__icon"><i class="ri-shopping-bag-line"></i></div>
+              <div>
+                <div class="service-feature__title">Curated Product Packages</div>
+                <p class="service-feature__desc">Access to our exclusive supplier network, including small-batch makers
+                  and clinical-grade equipment not available in retail.</p>
+              </div>
+            </div>
+            <div class="service-feature" data-reveal data-reveal-delay="3">
+              <div class="service-feature__icon"><i class="ri-computer-line"></i></div>
+              <div>
+                <div class="service-feature__title">Client Dashboard</div>
+                <p class="service-feature__desc">Track your project live — from initial assessment, through design, all
+                  the way to installation sign-off.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTERACTIVE: WORKSPACE MOODS
+       ============================================================ -->
+  <section class="section" style="overflow:hidden;position:relative">
+    <div class="container" style="position:relative;z-index:2">
+      <div style="text-align:center;margin-bottom:48px">
+        <span class="section-header__eyebrow">Interactive Preview</span>
+        <h2>Switch Your <span class="gradient-text">State</span></h2>
+        <p style="color:var(--text-secondary);max-width:50ch;margin:12px auto 0">Experience how our spaces adapt to your
+          intent. One button, total transformation.</p>
+      </div>
+
+      <div class="mood-grid">
+        <div class="mood-card active" onclick="switchMood('focus', this)" data-reveal>
+          <div class="card-icon"><i class="ri-focus-3-line"></i></div>
+          <h3>The Deep Focus</h3>
+          <p>Cool blue lighting, noise isolation active, and table raised to standing position.</p>
+        </div>
+        <div class="mood-card" onclick="switchMood('flow', this)" data-reveal data-reveal-delay="1">
+          <div class="card-icon"><i class="ri-water-flash-line"></i></div>
+          <h3>The Creative Flow</h3>
+          <p>Warm amber tones, ambient music enabled, and panoramic 3D view projected.</p>
+        </div>
+        <div class="mood-card" onclick="switchMood('recovery', this)" data-reveal data-reveal-delay="2">
+          <div class="card-icon"><i class="ri-rest-time-line"></i></div>
+          <h3>The Recovery</h3>
+          <p>Low-intensity greens, posture reminders active, and light stretching guide.</p>
+        </div>
+      </div>
+
+      <div class="mood-preview" data-reveal style="border: 1px solid var(--border-color)">
+        <img src="https://images.unsplash.com/photo-1518455027359-f3fd2e3b2e92?w=1200&auto=format&fit=crop&q=80"
+          alt="Workspace View" id="mood-img">
+        <div class="mood-overlay" id="mood-overlay" style="background:rgba(34,211,238,0.08)"></div>
+        <!-- overlay label -->
+        <div style="position:absolute;bottom:24px;left:24px;z-index:10;" id="mood-label">
+          <span class="badge badge--primary" style="font-size:0.78rem;backdrop-filter:blur(8px)"><i
+              class="ri-focus-3-line"></i> Deep Focus Mode Active</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       QUOTE / MANIFESTO
+       ============================================================ -->
+  <section class="section bg-muted" style="overflow:hidden;position:relative">
+    <div class="container" style="position:relative;z-index:2;text-align:center">
+      <span class="section-header__eyebrow" data-reveal>Our Manifesto</span>
+      <div class="big-quote" data-reveal data-reveal-delay="1" style="max-width:860px;margin:24px auto">
+        "The environment you work in is not <span class="highlight">background noise</span>—it is the <span
+          class="highlight">instrument</span> through which your best ideas take shape."
+      </div>
+      <p style="color:var(--text-secondary);margin-top:20px" data-reveal data-reveal-delay="2">— ErgoHome Design
+        Philosophy</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MINI STATS ROW
+       ============================================================ -->
+  <section class="section--sm">
+    <div class="container">
+      <div class="cols-3" style="gap:16px" id="stats-row">
+        <div class="stat-item" style="text-align:center;padding:32px" data-reveal>
+          <div class="stat-value" data-count="500">0</div>
+          <div class="stat-label">Spaces Designed</div>
+        </div>
+        <div class="stat-item" style="text-align:center;padding:32px" data-reveal data-reveal-delay="1">
+          <div class="stat-value" data-count="94">0</div>
+          <div class="stat-label">% Pain Reduction</div>
+        </div>
+        <div class="stat-item" style="text-align:center;padding:32px" data-reveal data-reveal-delay="2">
+          <div class="stat-value" data-count="12">0</div>
+          <div class="stat-label">Countries Served</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA SECTION
+       ============================================================ -->
+  <section class="section cta-section">
+    <div class="container" style="text-align:center;max-width:720px">
+      <span class="section-header__eyebrow" data-reveal><i class="ri-cursor-line"></i> Ready to Begin?</span>
+      <h2 data-reveal data-reveal-delay="1" style="margin:16px 0 20px">
+        Build Your <span class="gradient-text">Peak Performance</span> Environment Today
+      </h2>
+      <p data-reveal data-reveal-delay="2"
+        style="color:var(--text-secondary);max-width:50ch;margin:0 auto 32px;line-height:1.7">
+        Your desk is not just furniture; it's the cockpit of your productivity. We blend biometric data with aesthetic
+        sanctuary to build your peak performance environment.
+      </p>
+      <div class="hero__actions" style="justify-content:center" data-reveal data-reveal-delay="3">
+        <a href="pages/booking.html" class="btn btn--primary btn--lg">Book Discovery Call <i
+            class="ri-calendar-check-line"></i></a>
+        <a href="pages/services.html" class="btn btn--ghost btn--lg">View Workshops <i
+            class="ri-arrow-right-line"></i></a>
+      </div>
+
+      <!-- Trust badges -->
+      <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:36px" data-reveal
+        data-reveal-delay="4">
+        <span style="display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);font-size:0.8rem"><i
+            class="ri-shield-check-line" style="color:var(--green)"></i>GDPR Compliant</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);font-size:0.8rem"><i
+            class="ri-award-line" style="color:var(--amber)"></i>Industry Certified</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);font-size:0.8rem"><i
+            class="ri-lock-line" style="color:var(--brand-primary)"></i>No Commitment</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <div class="nav__logo-icon" style="background:var(--brand-gradient)"><i class="ri-armchair-line"></i></div>
+          ErgoHome
+        </a>
+        <p class="footer__desc">Health-first ergonomic workspace design — from assessment to installation. Trusted by 2,400+ remote professionals worldwide.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+          <a href="#" class="footer__social" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+          <a href="#" class="footer__social" aria-label="Twitter/X"><i class="ri-twitter-x-line"></i></a>
+          <a href="#" class="footer__social" aria-label="YouTube"><i class="ri-youtube-line"></i></a>
+          <a href="#" class="footer__social" aria-label="Pinterest"><i class="ri-pinterest-line"></i></a>
+        </div>
+      </div>
+      <div>
+        <p class="footer__col-title">Company</p>
+        <a href="pages/about.html"   class="footer__link">About Us</a>
+        <a href="pages/services.html"class="footer__link">Services</a>
+        <a href="pages/blog.html"    class="footer__link">Blog</a>
+        <a href="pages/booking.html" class="footer__link">Book a Call</a>
+        <a href="pages/contact.html" class="footer__link">Contact</a>
+      </div>
+      <div>
+        <p class="footer__col-title">Services</p>
+        <a href="pages/services.html" class="footer__link">Ergonomic Assessment</a>
+        <a href="pages/services.html" class="footer__link">3D Room Design</a>
+        <a href="pages/services.html" class="footer__link">Product Sourcing</a>
+        <a href="pages/services.html" class="footer__link">Installation Support</a>
+        <a href="pages/services.html" class="footer__link">Wellness Check-ins</a>
+      </div>
+      <div>
+        <p class="footer__col-title">Newsletter</p>
+        <p style="font-size:var(--text-sm);margin-bottom:var(--sp-4)">Ergonomic tips, product reviews, and workspace inspiration — monthly.</p>
+        <form class="footer__newsletter js-newsletter-form" data-validate>
+          <input type="email" placeholder="your@email.com" required aria-label="Newsletter email">
+          <button type="submit" class="btn btn--primary btn--full"><i class="ri-send-plane-line"></i> Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2025 ErgoHome. All rights reserved.</span>
+      <div style="display:flex;gap:var(--sp-6)">
+        <a href="#" class="footer__link" style="margin-bottom:0">Privacy Policy</a>
+        <a href="#" class="footer__link" style="margin-bottom:0">Terms of Service</a>
+        <a href="sitemap.xml" class="footer__link" style="margin-bottom:0">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  <div class="toast-container" role="alert" aria-live="polite"></div>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Mood switcher
+    const moodConfigs = {
+      focus: { filter: 'brightness(1.05) saturate(0.85) hue-rotate(200deg)', bg: 'rgba(34,211,238,0.08)', label: '<i class="ri-focus-3-line"></i> Deep Focus Mode Active' },
+      flow: { filter: 'sepia(0.3) brightness(1.05)', bg: 'rgba(245,158,11,0.1)', label: '<i class="ri-water-flash-line"></i> Creative Flow Mode Active' },
+      recovery: { filter: 'hue-rotate(80deg) brightness(0.92) saturate(0.85)', bg: 'rgba(16,185,129,0.08)', label: '<i class="ri-rest-time-line"></i> Recovery Mode Active' }
+    };
+    function switchMood(type, el) {
+      document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      const cfg = moodConfigs[type];
+      document.getElementById('mood-img').style.filter = cfg.filter;
+      document.getElementById('mood-overlay').style.background = cfg.bg;
+      document.getElementById('mood-label').innerHTML = `<span class="badge badge--primary" style="font-size:0.78rem;backdrop-filter:blur(8px)">${cfg.label}</span>`;
+      ErgoHome.Toast.show(`State switched to: ${type}`, 'info');
+    }
+
+    // Parallax on scroll
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+      const pt1 = document.getElementById('pt1');
+      const pt2 = document.getElementById('pt2');
+      if (pt1) pt1.style.transform = `translateX(${scroll * 0.15}px)`;
+      if (pt2) pt2.style.transform = `translateX(${-scroll * 0.12}px)`;
+    }, { passive: true });
+  </script>
+</body>
+
+</html>

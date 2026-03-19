@@ -1,0 +1,238 @@
+/* ==========================================================================
+   ErgoHome - Dark Mode Styles
+   ========================================================================== */
+
+/* Dark mode via data attribute (preferred) or system preference */
+[data-theme="dark"],
+.dark-mode {
+  /* Semantic Colors Override */
+  --bg-base:       #0c1220;
+  --bg-surface:    #111927;
+  --bg-elevated:   #182436;
+  --bg-muted:      #1a2535;
+  --border-color:  rgba(255,255,255,0.08);
+  --text-primary:  #f0f4f8;
+  --text-secondary:#94a3b8;
+  --text-muted:    #64748b;
+  --text-inverse:  #0c1220;
+  --shadow-sm:     0 1px 3px rgba(0,0,0,.40), 0 1px 2px rgba(0,0,0,.30);
+  --shadow-md:     0 4px 12px rgba(0,0,0,.50), 0 2px 6px rgba(0,0,0,.30);
+  --shadow-lg:     0 10px 32px rgba(0,0,0,.55), 0 4px 12px rgba(0,0,0,.30);
+  --shadow-xl:     0 24px 56px rgba(0,0,0,.60), 0 8px 20px rgba(0,0,0,.35);
+
+  /* Primary adjustments */
+  --color-primary-50:  rgba(14,164,114,0.08);
+  --color-primary-100: rgba(14,164,114,0.15);
+
+  /* Secondary adjustments */
+  --color-secondary-50:  rgba(96,64,232,0.08);
+  --color-secondary-100: rgba(96,64,232,0.15);
+}
+
+/* Specific component tweaks in dark mode */
+[data-theme="dark"] body,
+.dark-mode body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .nav,
+.dark-mode .nav {
+  background: var(--bg-surface);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .nav.scrolled,
+.dark-mode .nav.scrolled {
+  background: rgba(17, 25, 39, 0.95);
+}
+
+[data-theme="dark"] .hero__bg,
+.dark-mode .hero__bg {
+  background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(14,164,114,0.06) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 50% at 10% 80%, rgba(96,64,232,0.06) 0%, transparent 70%);
+}
+
+[data-theme="dark"] .hero__blob--1,
+.dark-mode .hero__blob--1 {
+  opacity: 0.15;
+}
+[data-theme="dark"] .hero__blob--2,
+.dark-mode .hero__blob--2 {
+  opacity: 0.1;
+}
+
+[data-theme="dark"] .card,
+.dark-mode .card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .card:hover,
+.dark-mode .card:hover {
+  border-color: rgba(255,255,255,0.14);
+}
+
+[data-theme="dark"] .card--glass,
+.dark-mode .card--glass {
+  background: rgba(17, 25, 39, 0.6);
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea,
+.dark-mode .form-input,
+.dark-mode .form-select,
+.dark-mode .form-textarea {
+  background: var(--bg-muted);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-input::placeholder,
+[data-theme="dark"] .form-textarea::placeholder,
+.dark-mode .form-input::placeholder,
+.dark-mode .form-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .tab-btn.active,
+.dark-mode .tab-btn.active {
+  background: var(--bg-elevated);
+}
+
+[data-theme="dark"] .tabs-nav,
+.dark-mode .tabs-nav {
+  background: var(--bg-muted);
+}
+
+[data-theme="dark"] .accordion,
+.dark-mode .accordion {
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .accordion-header:hover,
+.dark-mode .accordion-header:hover {
+  background: var(--bg-muted);
+}
+
+[data-theme="dark"] .stat-item,
+.dark-mode .stat-item {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .testimonial-card,
+.dark-mode .testimonial-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .blog-card,
+.dark-mode .blog-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .footer,
+.dark-mode .footer {
+  background: #070d17;
+}
+
+[data-theme="dark"] .toast,
+.dark-mode .toast {
+  background: var(--bg-elevated);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .step-num,
+.dark-mode .step-num {
+  background: var(--bg-surface);
+}
+
+[data-theme="dark"] .map-placeholder,
+.dark-mode .map-placeholder {
+  background: var(--bg-muted);
+  border-color: var(--border-color);
+}
+
+/* Dark mode toggle button */
+.theme-toggle {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary);
+  font-size: 16px;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+.theme-toggle:hover {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+  background: var(--color-primary-50);
+}
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  position: absolute;
+  transition: all var(--transition-normal);
+}
+/* Light mode: show sun, hide moon */
+.theme-toggle .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+.theme-toggle .icon-sun  { opacity: 1; transform: rotate(0) scale(1); }
+/* Dark mode: show moon, hide sun */
+[data-theme="dark"] .theme-toggle .icon-sun,
+.dark-mode .theme-toggle .icon-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+[data-theme="dark"] .theme-toggle .icon-moon,
+.dark-mode .theme-toggle .icon-moon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+/* Dark mode skeleton */
+[data-theme="dark"] .skeleton,
+.dark-mode .skeleton {
+  background: linear-gradient(90deg, var(--bg-muted) 25%, var(--bg-elevated) 50%, var(--bg-muted) 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Dark mode nav mobile */
+[data-theme="dark"] .nav__mobile,
+.dark-mode .nav__mobile {
+  background: var(--bg-surface);
+}
+
+/* Dark mode scrollbar */
+[data-theme="dark"]::-webkit-scrollbar { width: 8px; }
+[data-theme="dark"]::-webkit-scrollbar-track { background: var(--bg-base); }
+[data-theme="dark"]::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+[data-theme="dark"]::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+/* System preference support (if no explicit override) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light-mode) {
+    --bg-base:       #0c1220;
+    --bg-surface:    #111927;
+    --bg-elevated:   #182436;
+    --bg-muted:      #1a2535;
+    --border-color:  rgba(255,255,255,0.08);
+    --text-primary:  #f0f4f8;
+    --text-secondary:#94a3b8;
+    --text-muted:    #64748b;
+    --shadow-sm:     0 1px 3px rgba(0,0,0,.40), 0 1px 2px rgba(0,0,0,.30);
+    --shadow-md:     0 4px 12px rgba(0,0,0,.50), 0 2px 6px rgba(0,0,0,.30);
+    --shadow-lg:     0 10px 32px rgba(0,0,0,.55), 0 4px 12px rgba(0,0,0,.30);
+    --shadow-xl:     0 24px 56px rgba(0,0,0,.60), 0 8px 20px rgba(0,0,0,.35);
+    --color-primary-50:  rgba(14,164,114,0.08);
+    --color-primary-100: rgba(14,164,114,0.15);
+    --color-secondary-50:  rgba(96,64,232,0.08);
+    --color-secondary-100: rgba(96,64,232,0.15);
+  }
+}

@@ -1,0 +1,391 @@
+/* ==========================================================================
+   ErgoHome – Mobile Responsive Fixes
+   Fixes: nav hamburger visibility, mobile layouts, dashboard sidebar
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Nav – Show hamburger below 1024px, hide desktop links
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .nav__links {
+    display: none !important;
+  }
+  .nav__hamburger {
+    display: flex !important;
+  }
+
+  /* Hide RTL toggle text on small screens */
+  .rtl-toggle-text {
+    display: none;
+  }
+
+  /* Reduce padding on nav actions */
+  .nav__actions {
+    gap: 8px;
+  }
+}
+
+/* Mobile menu slide in */
+.nav__mobile {
+  display: block !important; /* Always in DOM, controlled by transform */
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  padding: 16px;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--bg-surface, #fff);
+}
+[data-theme="dark"] .nav__mobile {
+  background: rgba(8, 12, 20, 0.98);
+  backdrop-filter: blur(20px);
+}
+.nav__mobile.open {
+  transform: translateX(0) !important;
+}
+
+/* Only show hamburger at correct breakpoint */
+.nav__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border-color, rgba(0,0,0,0.1));
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.nav__hamburger:hover {
+  background: var(--bg-muted, rgba(0,0,0,0.04));
+}
+.nav__hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text-primary, #111);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+.nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav link spacing */
+.nav__mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+}
+.nav__mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-primary, #111);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.nav__mobile-link:hover,
+.nav__mobile-link.active {
+  background: var(--color-primary-50, rgba(34,211,238,0.07));
+  color: var(--brand-primary, #22d3ee);
+}
+.nav__mobile-link i {
+  font-size: 18px;
+  width: 22px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Hero – mobile layout
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-height, 72px) + 48px);
+    padding-bottom: 60px;
+  }
+  .hero .cols-2,
+  .hero-creative .cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .hero__blob--1, .hero__blob--2 {
+    width: 300px !important;
+    height: 300px !important;
+  }
+  .hero2-img-frame {
+    display: none !important;
+  }
+  .floating-badge {
+    display: none !important;
+  }
+  .hero__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero__actions .btn--lg {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. General Sections – mobile padding/spacing
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .section {
+    padding-block: 48px !important;
+  }
+  .section--sm {
+    padding-block: 36px !important;
+  }
+  .container {
+    padding-inline: 16px !important;
+  }
+
+  h1 { font-size: clamp(2rem, 8vw, 2.8rem) !important; }
+  h2 { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+
+  /* Stack cols-2, cols-3, cols-2-3 */
+  .cols-2,
+  .cols-3,
+  .cols-2-3 {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* Overview quick actions */
+  div[style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Cards – prevent overflow on mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .card {
+    padding: 16px !important;
+  }
+  .testimonial-card,
+  .blog-card,
+  .service-card,
+  .feature-card {
+    padding: 16px;
+  }
+  .stat-item {
+    padding: 20px !important;
+  }
+  .stat-value {
+    font-size: 2.2rem !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Dashboard – Hamburger (sidebar-toggle) display fix
+   -------------------------------------------------------------------------- */
+.sidebar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--border-color, rgba(255,255,255,0.1));
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-primary, #e8f0fe);
+  font-size: 20px;
+  transition: background 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+.sidebar-toggle:hover {
+  background: var(--color-primary-50, rgba(34,211,238,0.07));
+  color: var(--brand-primary, #22d3ee);
+}
+
+@media (max-width: 1024px) {
+  .sidebar-toggle {
+    display: flex !important;
+  }
+  .dashboard-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100vh !important;
+    z-index: 1000 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    width: 280px !important;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.3);
+  }
+  .dashboard-sidebar.open {
+    transform: translateX(0) !important;
+  }
+  .dashboard-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 999;
+    backdrop-filter: blur(4px);
+  }
+  .dashboard-overlay.active {
+    display: block !important;
+  }
+  .dashboard-main {
+    margin-left: 0 !important;
+  }
+}
+
+/* Dashboard: stack widget grid on small screens */
+@media (max-width: 640px) {
+  .widget-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  .dashboard-content {
+    padding: 16px !important;
+  }
+  .dashboard-topbar {
+    padding: 12px 16px !important;
+  }
+  .topbar-title {
+    font-size: 1rem !important;
+  }
+}
+@media (max-width: 400px) {
+  .widget-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Mood grid mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .mood-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .mood-preview img {
+    height: 280px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Process steps mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .process-steps::before {
+    left: 20px !important;
+  }
+  .process-step__num {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 0.9rem !important;
+  }
+  .service-feature {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Bento grid mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  .bento-item--2x2 {
+    grid-column: span 2 !important;
+    grid-row: span 1 !important;
+  }
+  .bento-item--1x2 {
+    grid-row: span 1 !important;
+    min-height: 240px !important;
+  }
+  .bento-item {
+    padding: 20px !important;
+  }
+}
+@media (max-width: 480px) {
+  .bento-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .bento-item--2x2,
+  .bento-item--2x1,
+  .bento-item--1x2 {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. Footer mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .footer__grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .footer__bottom {
+    flex-direction: column !important;
+    gap: 12px !important;
+    text-align: center !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Marquee adjust on mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .marquee-item {
+    font-size: 0.78rem !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   11. Shopping table on mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .shopping-table thead th:nth-child(3),
+  .shopping-table thead th:nth-child(4),
+  .shopping-table tbody td:nth-child(3),
+  .shopping-table tbody td:nth-child(4) {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   12. Profile/settings grid on mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  div[style*="grid-template-columns:2fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. Fix body overflow on mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  body.mobile-menu-open {
+    overflow: hidden;
+  }
+}

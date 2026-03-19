@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow client portal (private pages)
+Disallow: /pages/dashboard.html
+Disallow: /pages/coming-soon.html
+Disallow: /pages/404.html
+
+Sitemap: https://www.ergohome.co/sitemap.xml

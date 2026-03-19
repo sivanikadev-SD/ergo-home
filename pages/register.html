@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <script>
+    (function(){
+      var t=localStorage.getItem('ergohome-theme');
+      document.documentElement.setAttribute('data-theme', t || 'dark');
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account – ErgoHome</title>
+  <meta name="description" content="Create your free ErgoHome account. Start designing your perfect ergonomic workspace today with expert guidance and 3D room planning.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/premium-theme.css">
+  <link rel="stylesheet" href="../assets/css/mobile-fixes.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-6);
+      padding-top: calc(var(--nav-height) + var(--sp-8));
+      padding-bottom: var(--sp-12);
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 80% 20%, var(--color-secondary-50) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 20% 80%, var(--color-primary-50) 0%, transparent 70%);
+      z-index: 0;
+    }
+    .auth-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+    }
+    .auth-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-2xl);
+      padding: var(--sp-10);
+      box-shadow: var(--shadow-xl);
+      position:relative;
+      overflow:hidden;
+    }
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-primary-500) 100%);
+    }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-8);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .auth-logo .nav__logo-icon {
+      width: 48px; height: 48px;
+      font-size: 22px;
+    }
+    .auth-logo-text {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 800;
+    }
+    .auth-logo-text span { color: var(--brand-primary); }
+    .auth-title {
+      text-align: center;
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      margin-bottom: var(--sp-2);
+    }
+    .auth-subtitle {
+      text-align: center;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--sp-8);
+    }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      margin-block: var(--sp-6);
+      color: var(--text-muted);
+      font-size: var(--text-xs);
+    }
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+    .auth-social-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3);
+    }
+    .auth-social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+      padding: var(--sp-3) var(--sp-4);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      background: var(--bg-surface);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      min-height: 44px;
+    }
+    .auth-social-btn:hover {
+      background: var(--bg-muted);
+      border-color: var(--color-neutral-300);
+      transform: translateY(-1px);
+    }
+    .auth-social-btn i { font-size: 18px; }
+    .auth-footer {
+      text-align: center;
+      margin-top: var(--sp-6);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .auth-footer a {
+      color: var(--brand-primary);
+      font-weight: 600;
+    }
+    .auth-footer a:hover { text-decoration: underline; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-4);
+    }
+    .password-strength {
+      display: flex;
+      gap: 4px;
+      margin-top: var(--sp-2);
+    }
+    .password-strength__bar {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border-color);
+      transition: background var(--transition-fast);
+    }
+    .password-strength__bar.weak { background: #f43f5e; }
+    .password-strength__bar.medium { background: #f59e0b; }
+    .password-strength__bar.strong { background: #10b981; }
+    .password-strength__label {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: var(--sp-1);
+    }
+    .auth-benefits {
+      display: flex;
+      gap: var(--sp-4);
+      margin-top: var(--sp-8);
+      padding-top: var(--sp-6);
+      border-top: 1px solid var(--border-color);
+    }
+    .auth-benefit {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+    }
+    .auth-benefit i {
+      color: var(--brand-primary);
+      font-size: 16px;
+    }
+    .auth-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      pointer-events: none;
+      animation: blobFloat 8s ease-in-out infinite;
+    }
+    .auth-blob--1 {
+      width: 400px; height: 400px;
+      background: var(--color-secondary-400);
+      top: -100px; left: -80px;
+    }
+    .auth-blob--2 {
+      width: 300px; height: 300px;
+      background: var(--color-primary-400);
+      bottom: -80px; right: -60px;
+      animation-delay: 3s;
+    }
+    @keyframes blobFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(15px, -20px) scale(1.05); }
+      66% { transform: translate(-10px, 10px) scale(0.95); }
+    }
+
+    @media (max-width: 640px) {
+      .auth-card { padding: var(--sp-8) var(--sp-6); }
+      .form-row { grid-template-columns: 1fr; }
+      .auth-social-btns { grid-template-columns: 1fr; }
+      .auth-benefits { flex-direction: column; gap: var(--sp-2); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating blobs -->
+<div class="auth-blob auth-blob--1" aria-hidden="true"></div>
+<div class="auth-blob auth-blob--2" aria-hidden="true"></div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo"><div class="nav__logo-icon"><i class="ri-armchair-line"></i></div><span class="nav__logo-text">Ergo<span>Home</span></span></a>
+    <div class="nav__links">
+      <a href="../index.html"  class="nav__link"><i class="ri-home-line"></i>Home</a>
+      <a href="../index2.html" class="nav__link"><i class="ri-sparkling-fill"></i>Home 2</a>
+      <a href="about.html"    class="nav__link"><i class="ri-information-line"></i>About</a>
+      <a href="services.html" class="nav__link"><i class="ri-service-line"></i>Services</a>
+      <a href="blog.html"     class="nav__link"><i class="ri-article-line"></i>Blog</a>
+      <a href="booking.html"  class="nav__link"><i class="ri-calendar-line"></i>Book a Call</a>
+      <a href="contact.html"  class="nav__link"><i class="ri-mail-line"></i>Contact</a>
+    </div>
+    <div class="nav__actions">
+      <button class="rtl-toggle btn btn--ghost btn--sm" title="Switch Language/Direction"><i class="ri-translate-2"></i> <span class="rtl-toggle-text">RTL</span></button>
+      <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
+      <a href="login.html" class="btn btn--primary btn--sm"><i class="ri-login-circle-line"></i>Login</a>
+      <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav__mobile">
+  <a href="../index.html"  class="nav__mobile-link"><i class="ri-home-line"></i>Home</a>
+  <a href="../index2.html" class="nav__mobile-link"><i class="ri-sparkling-fill"></i>Home 2</a>
+  <a href="about.html"    class="nav__mobile-link"><i class="ri-information-line"></i>About</a>
+  <a href="services.html" class="nav__mobile-link"><i class="ri-service-line"></i>Services</a>
+  <a href="blog.html"     class="nav__mobile-link"><i class="ri-article-line"></i>Blog</a>
+  <a href="booking.html"  class="nav__mobile-link"><i class="ri-calendar-line"></i>Book a Call</a>
+  <a href="contact.html"  class="nav__mobile-link"><i class="ri-mail-line"></i>Contact</a>
+  <div style="margin-top:var(--sp-6);padding-top:var(--sp-6);border-top:1px solid var(--border-color);display:flex;flex-direction:column;gap:var(--sp-4)">
+    <a href="login.html" class="btn btn--primary btn--full"><i class="ri-login-circle-line"></i>Login</a>
+    <a href="register.html" class="btn btn--secondary btn--full"><i class="ri-user-add-line"></i>Register</a>
+  </div>
+</div>
+
+<main id="main-content">
+  <section class="auth-page">
+    <div class="auth-container">
+      <div class="auth-card">
+        <a href="../index.html" class="auth-logo">
+          <div class="nav__logo-icon"><i class="ri-armchair-line"></i></div>
+          <div class="auth-logo-text">Ergo<span>Home</span></div>
+        </a>
+
+        <h1 class="auth-title">Create your account</h1>
+        <p class="auth-subtitle">Join 2,400+ professionals building healthier workspaces</p>
+
+        <!-- Social Sign-up -->
+        <div class="auth-social-btns">
+          <button class="auth-social-btn" type="button"><i class="ri-google-fill" style="color:#ea4335"></i> Google</button>
+          <button class="auth-social-btn" type="button"><i class="ri-apple-fill"></i> Apple</button>
+        </div>
+
+        <div class="auth-divider">or register with email</div>
+
+        <!-- Register Form -->
+        <form class="js-register-form" data-validate novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reg-fname">First Name <span class="required">*</span></label>
+              <input type="text" id="reg-fname" name="firstName" class="form-input" placeholder="Jane" required>
+              <div class="form-error" style="display:none"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-lname">Last Name <span class="required">*</span></label>
+              <input type="text" id="reg-lname" name="lastName" class="form-input" placeholder="Smith" required>
+              <div class="form-error" style="display:none"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address <span class="required">*</span></label>
+            <div class="form-input-wrap"><i class="ri-mail-line form-icon"></i><input type="email" id="reg-email" name="email" class="form-input" placeholder="jane@example.com" required></div>
+            <div class="form-error" style="display:none"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password <span class="required">*</span></label>
+            <div class="form-input-wrap" style="position:relative"><i class="ri-lock-line form-icon"></i><input type="password" id="reg-password" name="password" class="form-input" placeholder="At least 8 characters" required minlength="8" style="padding-left:40px;padding-right:44px"><button type="button" class="password-toggle" onclick="togglePassword('reg-password', this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px" aria-label="Show password"><i class="ri-eye-line"></i></button></div>
+            <div class="password-strength" id="pw-strength"><div class="password-strength__bar"></div><div class="password-strength__bar"></div><div class="password-strength__bar"></div><div class="password-strength__bar"></div></div>
+            <div class="password-strength__label" id="pw-label"></div>
+            <div class="form-error" style="display:none"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-confirm">Confirm Password <span class="required">*</span></label>
+            <div class="form-input-wrap" style="position:relative"><i class="ri-lock-line form-icon"></i><input type="password" id="reg-confirm" name="confirmPassword" class="form-input" placeholder="Repeat your password" required minlength="8" style="padding-left:40px;padding-right:44px"><button type="button" class="password-toggle" onclick="togglePassword('reg-confirm', this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px" aria-label="Show password"><i class="ri-eye-line"></i></button></div>
+            <div class="form-error" style="display:none"></div>
+          </div>
+          <div class="form-group" style="margin-bottom:var(--sp-6)">
+            <label class="form-check">
+              <input type="checkbox" required name="terms">
+              <span class="form-check-label">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+            </label>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full btn--lg"><i class="ri-user-add-line"></i> Create Account</button>
+        </form>
+
+        <div class="auth-footer">
+          Already have an account? <a href="login.html">Sign in</a>
+        </div>
+
+        <div class="auth-benefits">
+          <div class="auth-benefit"><i class="ri-shield-check-line"></i> Secure & encrypted</div>
+          <div class="auth-benefit"><i class="ri-money-dollar-circle-line"></i> Free to join</div>
+          <div class="auth-benefit"><i class="ri-timer-line"></i> Takes 30 seconds</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast-container" role="alert" aria-live="polite"></div>
+<script src="../assets/js/main.js"></script>
+<script>
+  function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.className = 'ri-eye-off-line';
+    } else {
+      input.type = 'password';
+      icon.className = 'ri-eye-line';
+    }
+  }
+
+  // Password strength indicator
+  const regPw = document.getElementById('reg-password');
+  if (regPw) {
+    regPw.addEventListener('input', () => {
+      const val = regPw.value;
+      const bars = document.querySelectorAll('#pw-strength .password-strength__bar');
+      const label = document.getElementById('pw-label');
+      let strength = 0;
+      if (val.length >= 8) strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+      const levels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+      const classes = ['', 'weak', 'medium', 'medium', 'strong'];
+
+      bars.forEach((bar, i) => {
+        bar.className = 'password-strength__bar';
+        if (i < strength) bar.classList.add(classes[strength]);
+      });
+      label.textContent = val.length > 0 ? `Password strength: ${levels[strength]}` : '';
+    });
+  }
+
+  document.querySelectorAll('.js-register-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!FormValidator.validateForm(form)) return;
+
+      // Check password match
+      const pw = form.querySelector('[name="password"]').value;
+      const cpw = form.querySelector('[name="confirmPassword"]').value;
+      if (pw !== cpw) {
+        Toast.show('Passwords do not match. Please try again.', 'error');
+        return;
+      }
+
+      const btn = form.querySelector('[type="submit"]');
+      btn.classList.add('loading');
+      btn.disabled = true;
+      await new Promise(r => setTimeout(r, 2000));
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      Toast.show('Account created successfully! Redirecting to login…', 'success');
+      setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+    });
+  });
+</script>
+</body>
+</html>
