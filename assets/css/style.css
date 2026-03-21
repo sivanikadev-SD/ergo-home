@@ -266,11 +266,11 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--brand-gradient);
   border-radius: var(--radius-md);
   display: flex; align-items: center; justify-content: center;
-  color: white;
+  color: var(--text-primary);
   font-size: 18px;
   flex-shrink: 0;
 }
-.nav__logo-text span { color: var(--brand-primary); }
+.nav__logo-text{ color: var(--text-primary); }
 
 .nav__links {
   display: flex;
@@ -923,7 +923,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: 800;
-  color: white;
+  color:var(--text-primary);
   text-decoration: none;
   margin-bottom: var(--sp-5);
 }
@@ -951,7 +951,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   margin-bottom: var(--sp-5);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -959,7 +959,7 @@ h1, h2, h3, h4, h5, h6 {
 .footer__link {
   display: block;
   font-size: var(--text-sm);
-  color: var(--color-neutral-400);
+  color: var(--text-secondary);
   margin-bottom: var(--sp-3);
   transition: color var(--transition-fast);
 }
@@ -975,16 +975,18 @@ h1, h2, h3, h4, h5, h6 {
   font-size: var(--text-sm);
 }
 .footer__newsletter input {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: var(--sp-3) var(--sp-4);
   font-size: var(--text-sm);
-  color: white;
+  color: var(--text-primary);
   width: 100%;
   margin-bottom: var(--sp-3);
 }
-.footer__newsletter input::placeholder { color: var(--color-neutral-500); }
+.footer__newsletter input::placeholder { 
+  color: var(--text-primary);
+}
 
 /* --------------------------------------------------------------------------
    15. Accordion / FAQ
@@ -1435,7 +1437,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-creative__title {
   font-size: clamp(3rem, 10vw, 6rem);
   font-weight: 800;
-  line-height: 0.9;
+  line-height: 1.1;
   letter-spacing: -0.04em;
   margin-bottom: var(--sp-8);
 }
@@ -1478,3 +1480,51 @@ h1, h2, h3, h4, h5, h6 {
   transition: top var(--transition-fast);
 }
 .skip-link:focus { top: var(--sp-4); }
+
+/* --------------------------------------------------------------------------
+   32. Dropdown
+   -------------------------------------------------------------------------- */
+.nav__item--dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nav__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all var(--transition-fast);
+  z-index: var(--z-dropdown);
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-2) 0;
+}
+.nav__item--dropdown:hover .nav__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav__dropdown-link {
+  padding: var(--sp-2) var(--sp-4);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+.nav__dropdown-link:hover, .nav__dropdown-link.active {
+  color: var(--brand-primary);
+  background: var(--color-primary-50);
+}
+
+.js-newsletter-form input::placeholder,
+.sidebar-widget .form-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}

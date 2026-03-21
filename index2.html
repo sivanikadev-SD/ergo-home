@@ -26,207 +26,359 @@
   <link rel="stylesheet" href="assets/css/mobile-fixes.css">
   <link rel="stylesheet" href="assets/css/rtl.css">
   <style>
-    /* ── Page-specific overrides ── */
+    /* ──────────────────────────────────────────
+       HERO 2 – Reworked
+       ────────────────────────────────────────── */
 
-    /* Marquee ticker */
-    .marquee-track {
+    /* Hero wrapper */
+    .hero2 {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
       overflow: hidden;
+      padding-top: var(--nav-height);
     }
 
-    .marquee-inner {
-      display: flex;
-      width: max-content;
-      animation: marqueeScroll 28s linear infinite;
-      gap: 60px;
+    /* Gradient mesh background */
+    .hero2__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, color-mix(in srgb, var(--color-primary-300) 18%, transparent), transparent 70%),
+        radial-gradient(ellipse 50% 60% at 20% 60%, color-mix(in srgb, var(--color-secondary-300) 12%, transparent), transparent 65%);
+    }
+
+    /* Inner grid */
+    .hero2__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
       align-items: center;
     }
 
-    @keyframes marqueeScroll {
-      from {
-        transform: translateX(0);
-      }
-
-      to {
-        transform: translateX(-50%);
-      }
+    /* Left column */
+    .hero2__left {
+      position: relative;
+      z-index: 1;
     }
 
-    .marquee-item {
+    .hero2__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: var(--color-primary-50);
+      border: 1px solid var(--color-primary-200);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-primary);
+      margin-bottom: 24px;
+    }
+
+    .hero2__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+
+    .hero2__title em {
+      font-style: normal;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero2__outline {
+      -webkit-text-stroke: 2px var(--brand-primary);
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    [data-theme="light"] .hero2__outline {
+      -webkit-text-stroke: 2px var(--color-primary-500);
+    }
+
+    .hero2__desc {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 48ch;
+      margin-bottom: 36px;
+    }
+
+    /* Chips */
+    .hero2__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .hero2__chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 15px;
+      border-radius: 999px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+      animation: chipFloat 5s ease-in-out infinite alternate;
+    }
+
+    .hero2__chip i { color: var(--brand-primary); }
+    .hero2__chip:nth-child(2) { animation-delay: 1.2s; }
+    .hero2__chip:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes chipFloat {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-7px); }
+    }
+
+    /* CTA row */
+    .hero2__cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero2__trust {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero2__trust-avatars {
+      display: flex;
+    }
+
+    .hero2__trust-avatars img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-base);
+      margin-left: -8px;
+      object-fit: cover;
+    }
+
+    .hero2__trust-avatars img:first-child { margin-left: 0; }
+
+    /* Right column: image frame */
+    .hero2__right {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero2__frame {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.25),
+        0 0 0 1px color-mix(in srgb, var(--brand-primary) 20%, transparent);
+    }
+
+    [data-theme="dark"] .hero2__frame {
+      box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.55),
+        0 0 60px color-mix(in srgb, var(--brand-primary) 8%, transparent),
+        0 0 0 1px color-mix(in srgb, var(--brand-primary) 18%, transparent);
+    }
+
+    .hero2__frame img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+
+    .hero2__frame:hover img {
+      transform: scale(1.03);
+    }
+
+    .hero2__frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, transparent 55%, var(--bg-base) 100%);
+      pointer-events: none;
+    }
+
+    /* Floating stat cards */
+    .hero2__stat {
+      position: absolute;
+      z-index: 10;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px 18px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      color: var(--text-muted);
     }
 
-    .marquee-item i {
+    .hero2__stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--color-primary-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
       color: var(--brand-primary);
-      font-size: 16px;
-    }
-
-    .marquee-sep {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--border-accent);
       flex-shrink: 0;
     }
 
-    /* Outline heading */
+    .hero2__stat-num {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero2__stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .hero2__stat--tl {
+      top: 24px;
+      left: -28px;
+      animation: chipFloat 4s ease-in-out infinite alternate;
+    }
+
+    .hero2__stat--br {
+      bottom: 36px;
+      right: -20px;
+      animation: chipFloat 6s ease-in-out infinite alternate-reverse;
+    }
+
+    /* Decorative ring */
+    .hero2__ring {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 1px dashed color-mix(in srgb, var(--brand-primary) 20%, transparent);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: spin 40s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Parallax ghost text */
+    .hero2__ghost {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 14vw, 11rem);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      opacity: 0.04;
+      color: var(--text-primary);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero2__grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .hero2__frame img { height: 320px; }
+      .hero2__stat--tl { top: 12px; left: 8px; }
+      .hero2__stat--br { bottom: 16px; right: 8px; }
+      .hero2__ring { display: none; }
+    }
+
+    /* ── Marquee ticker ── */
+    .marquee-track  { overflow: hidden; }
+    .marquee-inner  {
+      display: flex; width: max-content;
+      animation: marqueeScroll 28s linear infinite;
+      gap: 60px; align-items: center;
+    }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      display: flex; align-items: center; gap: 12px;
+      font-weight: 600; font-size: 0.9rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      white-space: nowrap; color: var(--text-muted);
+    }
+    .marquee-item i { color: var(--brand-primary); font-size: 16px; }
+    .marquee-sep {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--border-accent); flex-shrink: 0;
+    }
+
+    /* ── Outline text (kept for re-use) ── */
     .text-outline {
       -webkit-text-stroke: 1.5px var(--text-primary);
       color: transparent;
       -webkit-text-fill-color: transparent;
     }
 
-    [data-theme="light"] .text-outline {
-      -webkit-text-stroke: 1.5px var(--text-primary);
-    }
-
-    /* Floating metric chip */
-    .metric-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-accent);
-      border-radius: var(--radius-full);
-      padding: 6px 14px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow-md);
-      animation: chipFloat 5s ease-in-out infinite alternate;
-    }
-
-    .metric-chip i {
-      color: var(--brand-primary);
-      font-size: 14px;
-    }
-
-    @keyframes chipFloat {
-      from {
-        transform: translateY(0);
-      }
-
-      to {
-        transform: translateY(-8px);
-      }
-    }
-
-    .metric-chip:nth-child(2) {
-      animation-delay: 1.5s;
-    }
-
-    .metric-chip:nth-child(3) {
-      animation-delay: 0.8s;
-    }
-
-    /* Hero image frame */
-    .hero2-img-frame {
-      position: relative;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid var(--border-accent);
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35), 0 0 0 1px var(--border-accent);
-    }
-
-    [data-theme="dark"] .hero2-img-frame {
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(34, 211, 238, 0.15), 0 0 60px rgba(34, 211, 238, 0.06);
-    }
-
-    [data-theme="light"] .hero2-img-frame {
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(59, 130, 246, 0.12);
-    }
-
-    .hero2-img-frame img {
-      width: 100%;
-      height: 460px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero2-img-frame::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 55%, var(--bg-base) 100%);
-    }
-
-    /* Floating absolute cards on the hero image */
-    .floating-badge {
-      position: absolute;
-      z-index: 10;
-      background: var(--card-bg);
-      border: 1px solid var(--border-accent);
-      border-radius: 12px;
-      padding: 10px 14px;
-      backdrop-filter: blur(16px);
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .floating-badge i {
-      color: var(--brand-primary);
-    }
-
-    .floating-badge--tl {
-      top: 20px;
-      left: -20px;
-      animation: chipFloat 4s ease-in-out infinite alternate;
-    }
-
-    .floating-badge--br {
-      bottom: 30px;
-      right: -10px;
-      animation: chipFloat 5.5s ease-in-out infinite alternate-reverse;
-    }
-
-    /* Mood switcher */
+    /* ── Mood switcher (unchanged) ── */
     .mood-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
       margin-bottom: 32px;
     }
-
     .mood-card {
-      padding: 20px;
-      border-radius: 16px;
-      cursor: pointer;
+      padding: 20px; border-radius: 16px; cursor: pointer;
       border: 2px solid var(--border-color);
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
+      background: var(--card-bg); backdrop-filter: blur(10px);
       transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       text-align: center;
     }
+    .mood-card .card-icon { margin: 0 auto 12px; }
+    .mood-card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .mood-card p  { font-size: 0.82rem; color: var(--text-secondary); }
+    .mood-card:hover { border-color: var(--border-accent); transform: translateY(-3px); }
+    .mood-card.active { background: var(--grad-primary); border-color: transparent; color: #fff; }
+    .mood-card.active p, .mood-card.active h3 { color: rgba(255,255,255,0.9); }
+    .mood-card.active .card-icon { background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.2); }
 
-    .mood-card .card-icon {
-      margin: 0 auto 12px;
-    }
-
-    .mood-card h3 {
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
-
-    .mood-card p {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-    }
-
-    .mood-card:hover {
-      border-color: var(--border-accent);
+    /* ── Mood preview image (unchanged) ── 
       transform: translateY(-3px);
     }
 
@@ -510,12 +662,17 @@
     <div class="nav__inner container">
       <a href="index.html" class="nav__logo">
         <div class="nav__logo-icon"><i class="ri-armchair-line"></i></div>
-        <span class="nav__logo-text">Ergo<span>Home</span></span>
+        <span class="nav__logo-text" style="color: var(--text-primary);">Ergo<span>Home</span></span>
       </a>
 
       <div class="nav__links">
-        <a href="index.html" class="nav__link" role="listitem"><i class="ri-home-line"></i>Home</a>
-        <a href="index2.html" class="nav__link active" role="listitem"><i class="ri-sparkling-fill"></i>Home 2</a>
+        <div class="nav__item--dropdown">
+        <button class="nav__link active" aria-haspopup="true" aria-expanded="false" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:14px;"><i class="ri-home-line"></i>Home <i class="ri-arrow-down-s-line" style="margin-left:4px"></i></button>
+        <div class="nav__dropdown">
+          <a href="index.html" class="nav__dropdown-link">Home 1</a>
+          <a href="index2.html" class="nav__dropdown-link">Home 2</a>
+        </div>
+      </div>
         <a href="pages/about.html" class="nav__link" role="listitem"><i class="ri-information-line"></i>About</a>
         <a href="pages/services.html" class="nav__link" role="listitem"><i class="ri-service-line"></i>Services</a>
         <a href="pages/blog.html" class="nav__link" role="listitem"><i class="ri-article-line"></i>Blog</a>
@@ -539,8 +696,13 @@
   <!-- Mobile Menu -->
   <div class="nav__mobile">
     <div class="nav__mobile-links">
-      <a href="index.html" class="nav__mobile-link"><i class="ri-home-line"></i>Home</a>
-      <a href="index2.html" class="nav__mobile-link active"><i class="ri-sparkling-fill"></i>Home 2</a>
+      <div class="nav__item--dropdown">
+        <button class="nav__mobile-link active" style="background:none; border:none; cursor:pointer; font-family:inherit; width:100%; text-align:left;" onclick="this.nextElementSibling.classList.toggle('open')"><i class="ri-home-line"></i>Home <i class="ri-arrow-down-s-line" style="margin-left:auto"></i></button>
+        <div class="nav__dropdown nav__mobile-dropdown" style="position:relative; top:0; box-shadow:none; border:none; background:transparent;">
+          <a href="index.html" class="nav__mobile-link" style="padding-left:36px; margin-top:4px;">Home 1</a>
+          <a href="index2.html" class="nav__mobile-link" style="padding-left:36px; margin-top:4px;">Home 2</a>
+        </div>
+      </div>
       <a href="pages/about.html" class="nav__mobile-link">Our Story</a>
       <a href="pages/services.html" class="nav__mobile-link">Workshops</a>
       <a href="pages/blog.html" class="nav__mobile-link">Magazine</a>
@@ -555,63 +717,102 @@
   </div>
 
   <!-- ============================================================
-       HERO: CINEMATIC SPLIT
+       HERO 2 – REWORKED
        ============================================================ -->
-  <section class="hero-creative"
-    style="padding-top:calc(var(--nav-height) + 60px); padding-bottom: 60px; min-height: 95svh; align-items: center;">
-    <!-- Ambient blobs -->
-    <div class="hero-creative__bg">
-      <div class="hero__blob--1"></div>
-      <div class="hero__blob--2"></div>
-    </div>
-    <!-- Parallax marquee text -->
-    <div class="parallax-text" id="pt1" style="top:15%;left:-5%">ERGO</div>
-    <div class="parallax-text" id="pt2" style="bottom:10%;right:-5%;font-size:clamp(4rem,12vw,10rem)">FLOW</div>
+  <section class="hero2" id="hero">
+    <!-- Gradient mesh bg -->
+    <div class="hero2__bg"></div>
 
-    <div class="hero-creative__content container">
-      <div class="cols-2" style="gap:60px">
-        <!-- Left: text -->
-        <div>
-          <span class="badge badge--gradient" data-reveal style="margin-bottom:20px">
-            <i class="ri-sparkling-2-fill"></i> Work Redefined
-          </span>
-          <h1 class="hero-creative__title" data-reveal style="margin-bottom:24px">
-            <span style="display:block">Design Your</span>
-            <span class="gradient-text" style="display:block">Inner Flow</span>
-            <span class="text-outline" style="display:block">Symmetry</span>
-          </h1>
-          <p class="hero-creative__subtitle" data-reveal data-reveal-delay="1" style="margin-bottom:32px">
-            Your desk is not just furniture; it's the cockpit of your productivity. We blend biometric data with
-            aesthetic sanctuary to build your peak performance environment.
-          </p>
+    <!-- Ghost type watermark -->
+    <div class="hero2__ghost" style="top: 10%; left: -4%; opacity: 0.035">ERGO</div>
+    <div class="hero2__ghost" style="bottom: 6%; right: -3%; font-size: clamp(4rem, 12vw, 9rem); opacity: 0.03">FLOW</div>
 
-          <!-- Metric chips -->
-          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px" data-reveal data-reveal-delay="1">
-            <div class="metric-chip"><i class="ri-pulse-line"></i>Bio-feedback analysis</div>
-            <div class="metric-chip" style="animation-delay:1.5s"><i class="ri-focus-3-line"></i>Focus optimised</div>
-            <div class="metric-chip" style="animation-delay:0.8s"><i class="ri-leaf-line"></i>Biophilic elements</div>
+    <div class="container" style="position:relative; z-index:1; width:100%; padding-block: 80px;">
+      <div class="hero2__grid">
+
+        <!-- ── LEFT: Copy ── -->
+        <div class="hero2__left" data-reveal>
+          <!-- Eyebrow -->
+          <div class="hero2__eyebrow">
+            <i class="ri-sparkling-2-fill"></i>
+            Work Redefined
           </div>
 
-          <div class="hero__actions" data-reveal data-reveal-delay="2">
-            <a href="pages/booking.html" class="btn btn--primary btn--lg">Book Discovery Call <i
-                class="ri-cursor-line"></i></a>
-            <a href="#bento" class="btn btn--ghost btn--lg">Explore the System <i class="ri-arrow-down-line"></i></a>
+          <!-- Headline -->
+          <h1 class="hero2__title">
+            Design Your<br>
+            <em>Inner Flow</em><br>
+            <span class="hero2__outline">Symmetry</span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="hero2__desc">
+            Your desk isn't just furniture — it's the cockpit of your potential.
+            We fuse biometric intelligence with aesthetic sanctuary to craft environments where you do your best work.
+          </p>
+
+          <!-- Feature chips -->
+          <div class="hero2__chips" data-reveal data-reveal-delay="1">
+            <div class="hero2__chip"><i class="ri-pulse-line"></i>Bio-feedback analysis</div>
+            <div class="hero2__chip"><i class="ri-focus-3-line"></i>Focus optimised</div>
+            <div class="hero2__chip"><i class="ri-leaf-line"></i>Biophilic elements</div>
+          </div>
+
+          <!-- CTA row -->
+          <div class="hero2__cta" data-reveal data-reveal-delay="2">
+            <a href="pages/booking.html" class="btn btn--primary btn--lg">
+              Book Discovery Call <i class="ri-cursor-line"></i>
+            </a>
+            <a href="#bento" class="btn btn--ghost btn--lg">
+              Explore the System <i class="ri-arrow-down-line"></i>
+            </a>
+          </div>
+
+          <!-- Social proof -->
+          <div style="display:flex; align-items:center; gap:14px; margin-top:28px;" data-reveal data-reveal-delay="3">
+            <div class="hero2__trust-avatars">
+              <img src="https://i.pravatar.cc/40?img=47" alt="Client 1">
+              <img src="https://i.pravatar.cc/40?img=26" alt="Client 2">
+              <img src="https://i.pravatar.cc/40?img=15" alt="Client 3">
+              <img src="https://i.pravatar.cc/40?img=32" alt="Client 4">
+            </div>
+            <div class="hero2__trust">
+              <span style="color:var(--brand-primary); font-weight:700;">★ 4.9</span>
+              &nbsp;from 500+ happy clients
+            </div>
           </div>
         </div>
 
-        <!-- Right: framed image + floating badges -->
-        <div style="position:relative" data-reveal data-reveal-delay="2">
-          <div class="floating-badge floating-badge--tl">
-            <i class="ri-award-fill"></i> 500+ Spaces Designed
+        <!-- ── RIGHT: Image ── -->
+        <div class="hero2__right" data-reveal data-reveal-delay="1">
+          <!-- Decorative rotating ring -->
+          <div class="hero2__ring"></div>
+
+          <!-- Floating stat – top left -->
+          <div class="hero2__stat hero2__stat--tl">
+            <div class="hero2__stat-icon"><i class="ri-award-fill"></i></div>
+            <div>
+              <div class="hero2__stat-num">500+</div>
+              <div class="hero2__stat-label">Spaces Designed</div>
+            </div>
           </div>
-          <div class="hero2-img-frame">
+
+          <!-- Main image -->
+          <div class="hero2__frame">
             <img src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=900&auto=format&fit=crop&q=80"
               alt="Premium Ergonomic Workspace" loading="lazy">
           </div>
-          <div class="floating-badge floating-badge--br">
-            <i class="ri-heart-pulse-fill"></i> 94% Pain Reduction
+
+          <!-- Floating stat – bottom right -->
+          <div class="hero2__stat hero2__stat--br">
+            <div class="hero2__stat-icon"><i class="ri-heart-pulse-fill"></i></div>
+            <div>
+              <div class="hero2__stat-num">94%</div>
+              <div class="hero2__stat-label">Pain Reduction Rate</div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -694,7 +895,7 @@
         </div>
 
         <!-- Item 2: Video (1×2) -->
-        <div class="bento-item bento-item--1x2 bento-item--video" data-reveal data-reveal-delay="1"
+        <div class="bento-item bento-item--2x2 bento-item--video" data-reveal data-reveal-delay="1"
           style="padding:0;background:#000;display:flex;align-items:center;justify-content:center">
           <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&auto=format&fit=crop&q=60" alt=""
             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.7">
@@ -804,7 +1005,7 @@
               </div>
             </div>
             <div class="service-feature" data-reveal data-reveal-delay="1">
-              <div class="service-feature__icon"><i class="ri-cube-3d-line"></i></div>
+              <div class="service-feature__icon"><i class="ri-box-3-line"></i></div>
               <div>
                 <div class="service-feature__title">Immersive 3D Rendering</div>
                 <p class="service-feature__desc">Photorealistic renders of your future workspace so you can walk through
@@ -864,7 +1065,7 @@
       </div>
 
       <div class="mood-preview" data-reveal style="border: 1px solid var(--border-color)">
-        <img src="https://images.unsplash.com/photo-1518455027359-f3fd2e3b2e92?w=1200&auto=format&fit=crop&q=80"
+        <img src="./assets/image/Balcony Inspiration.jfif"
           alt="Workspace View" id="mood-img">
         <div class="mood-overlay" id="mood-overlay" style="background:rgba(34,211,238,0.08)"></div>
         <!-- overlay label -->
@@ -955,10 +1156,10 @@
     <div class="footer__grid">
       <div class="footer__brand">
         <a href="index.html" class="footer__logo">
-          <div class="nav__logo-icon" style="background:var(--brand-gradient)"><i class="ri-armchair-line"></i></div>
+          <div class="nav__logo-icon" style="background:var(--brand-gradient); "><i class="ri-armchair-line"></i></div>
           ErgoHome
         </a>
-        <p class="footer__desc">Health-first ergonomic workspace design — from assessment to installation. Trusted by 2,400+ remote professionals worldwide.</p>
+        <p class="footer__desc">Health-first ergonomic workspace design � from assessment to installation. Trusted by 2,400+ remote professionals worldwide.</p>
         <div class="footer__socials">
           <a href="#" class="footer__social" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
           <a href="#" class="footer__social" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
@@ -985,7 +1186,7 @@
       </div>
       <div>
         <p class="footer__col-title">Newsletter</p>
-        <p style="font-size:var(--text-sm);margin-bottom:var(--sp-4)">Ergonomic tips, product reviews, and workspace inspiration — monthly.</p>
+        <p style="font-size:var(--text-sm);margin-bottom:var(--sp-4)">Ergonomic tips, product reviews, and workspace inspiration � monthly.</p>
         <form class="footer__newsletter js-newsletter-form" data-validate>
           <input type="email" placeholder="your@email.com" required aria-label="Newsletter email">
           <button type="submit" class="btn btn--primary btn--full"><i class="ri-send-plane-line"></i> Subscribe</button>
@@ -993,11 +1194,10 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <span>© 2025 ErgoHome. All rights reserved.</span>
+      <span>&copy; 2026 ErgoHome. All rights reserved.</span>
       <div style="display:flex;gap:var(--sp-6)">
         <a href="#" class="footer__link" style="margin-bottom:0">Privacy Policy</a>
         <a href="#" class="footer__link" style="margin-bottom:0">Terms of Service</a>
-        <a href="sitemap.xml" class="footer__link" style="margin-bottom:0">Sitemap</a>
       </div>
     </div>
   </div>
@@ -1033,3 +1233,4 @@
 </body>
 
 </html>
+

@@ -311,8 +311,13 @@
     </a>
 
     <div class="nav__links" role="list">
-      <a href="index.html"    class="nav__link active" role="listitem"><i class="ri-home-line"></i>Home</a>
-      <a href="index2.html"   class="nav__link" role="listitem"><i class="ri-sparkling-fill"></i>Home 2</a>
+      <div class="nav__item--dropdown">
+        <button class="nav__link active" aria-haspopup="true" aria-expanded="false" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:14px;"><i class="ri-home-line"></i>Home <i class="ri-arrow-down-s-line" style="margin-left:4px"></i></button>
+        <div class="nav__dropdown">
+          <a href="index.html" class="nav__dropdown-link">Home 1</a>
+          <a href="index2.html" class="nav__dropdown-link">Home 2</a>
+        </div>
+      </div>
       <a href="pages/about.html"    class="nav__link" role="listitem"><i class="ri-information-line"></i>About</a>
       <a href="pages/services.html" class="nav__link" role="listitem"><i class="ri-service-line"></i>Services</a>
       <a href="pages/blog.html"     class="nav__link" role="listitem"><i class="ri-article-line"></i>Blog</a>
@@ -341,8 +346,13 @@
 
 <!-- Mobile Menu -->
 <div class="nav__mobile" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
-  <a href="index.html"    class="nav__mobile-link active"><i class="ri-home-line"></i>Home</a>
-  <a href="index2.html"   class="nav__mobile-link"><i class="ri-sparkling-fill"></i>Home 2</a>
+  <div class="nav__item--dropdown">
+        <button class="nav__mobile-link active" style="background:none; border:none; cursor:pointer; font-family:inherit; width:100%; justify-content:flex-start; outline:none;" onclick="this.nextElementSibling.classList.toggle('open'); this.nextElementSibling.style.display = this.nextElementSibling.style.display==='flex'?'none':'flex'; this.nextElementSibling.style.flexDirection='column';"><i class="ri-home-line"></i>Home <i class="ri-arrow-down-s-line" style="margin-left:auto"></i></button>
+        <div class="nav__dropdown nav__mobile-dropdown" style="display:none; position:relative; top:0; box-shadow:none; border:none; background:transparent; visibility:visible; opacity:1; transform:none; min-width:100%; padding:0;">
+          <a href="index.html" class="nav__mobile-link" style="padding-left:36px; padding-top:8px; padding-bottom:8px">Home 1</a>
+          <a href="index2.html" class="nav__mobile-link" style="padding-left:36px; padding-top:8px; padding-bottom:8px">Home 2</a>
+        </div>
+      </div>
   <a href="pages/about.html"    class="nav__mobile-link"><i class="ri-information-line"></i>About</a>
   <a href="pages/services.html" class="nav__mobile-link"><i class="ri-service-line"></i>Services</a>
   <a href="pages/blog.html"     class="nav__mobile-link"><i class="ri-article-line"></i>Blog</a>
@@ -576,17 +586,17 @@
           <div class="portfolio-item__overlay"><span class="portfolio-item__label">Scandinavian Warm Studio — Portland</span></div>
         </div>
         <div class="portfolio-item portfolio-item--sm">
-          <img src="https://images.unsplash.com/photo-1593642532559-0c6d3fc62b89?w=600&auto=format&fit=crop&q=80" alt="Dark executive home office">
+          <img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=600&auto=format&fit=crop&q=80" alt="Modern tech home office with multiple screens">
           <div class="portfolio-item__overlay"><span class="portfolio-item__label">Executive Power Suite — Chicago</span></div>
         </div>
         <div class="portfolio-item portfolio-item--md">
           <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&auto=format&fit=crop&q=80" alt="Creative colorful workspace">
           <div class="portfolio-item__overlay"><span class="portfolio-item__label">Creative Studio — Austin</span></div>
         </div>
-        <div class="portfolio-item portfolio-item--md">
+        <!-- <div class="portfolio-item portfolio-item--md">
           <img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=600&auto=format&fit=crop&q=80" alt="Modern tech home office with multiple screens">
           <div class="portfolio-item__overlay"><span class="portfolio-item__label">Tech Setup — Seattle</span></div>
-        </div>
+        </div> -->
       </div>
       <div style="text-align:center;margin-top:var(--sp-10)">
         <a href="pages/services.html" class="btn btn--secondary btn--lg"><i class="ri-gallery-line"></i> View Full Portfolio</a>
@@ -819,7 +829,7 @@
           <div class="nav__logo-icon" style="background:var(--brand-gradient)"><i class="ri-armchair-line"></i></div>
           ErgoHome
         </a>
-        <p class="footer__desc">Health-first ergonomic workspace design — from assessment to installation. Trusted by 2,400+ remote professionals worldwide.</p>
+        <p class="footer__desc">Health-first ergonomic workspace design � from assessment to installation. Trusted by 2,400+ remote professionals worldwide.</p>
         <div class="footer__socials">
           <a href="#" class="footer__social" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
           <a href="#" class="footer__social" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
@@ -846,7 +856,7 @@
       </div>
       <div>
         <p class="footer__col-title">Newsletter</p>
-        <p style="font-size:var(--text-sm);margin-bottom:var(--sp-4)">Ergonomic tips, product reviews, and workspace inspiration — monthly.</p>
+        <p style="font-size:var(--text-sm);margin-bottom:var(--sp-4)">Ergonomic tips, product reviews, and workspace inspiration � monthly.</p>
         <form class="footer__newsletter js-newsletter-form" data-validate>
           <input type="email" placeholder="your@email.com" required aria-label="Newsletter email">
           <button type="submit" class="btn btn--primary btn--full"><i class="ri-send-plane-line"></i> Subscribe</button>
@@ -854,11 +864,10 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <span>© 2025 ErgoHome. All rights reserved.</span>
+      <span>&copy;2026 ErgoHome. All rights reserved.</span>
       <div style="display:flex;gap:var(--sp-6)">
         <a href="#" class="footer__link" style="margin-bottom:0">Privacy Policy</a>
         <a href="#" class="footer__link" style="margin-bottom:0">Terms of Service</a>
-        <a href="sitemap.xml" class="footer__link" style="margin-bottom:0">Sitemap</a>
       </div>
     </div>
   </div>
@@ -883,3 +892,5 @@
 <script src="assets/js/main.js"></script>
 </body>
 </html>
+
+

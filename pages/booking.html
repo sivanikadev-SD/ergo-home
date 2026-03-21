@@ -69,8 +69,13 @@
   <div class="nav__inner">
     <a href="../index.html" class="nav__logo"><div class="nav__logo-icon"><i class="ri-armchair-line"></i></div><span class="nav__logo-text">Ergo<span>Home</span></span></a>
     <div class="nav__links">
-      <a href="../index.html"  class="nav__link"><i class="ri-home-line"></i>Home</a>
-      <a href="../index2.html" class="nav__link"><i class="ri-sparkling-fill"></i>Home 2</a>
+      <div class="nav__item--dropdown">
+        <button class="nav__link active" aria-haspopup="true" aria-expanded="false" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:14px;"><i class="ri-home-line"></i>Home <i class="ri-arrow-down-s-line" style="margin-left:4px"></i></button>
+        <div class="nav__dropdown">
+          <a href="../index.html" class="nav__dropdown-link">Home 1</a>
+          <a href="../index2.html" class="nav__dropdown-link">Home 2</a>
+        </div>
+      </div>
       <a href="about.html"    class="nav__link"><i class="ri-information-line"></i>About</a>
       <a href="services.html" class="nav__link"><i class="ri-service-line"></i>Services</a>
       <a href="blog.html"     class="nav__link"><i class="ri-article-line"></i>Blog</a>
@@ -87,8 +92,13 @@
   </div>
 </nav>
 <div class="nav__mobile">
-  <a href="../index.html"  class="nav__mobile-link"><i class="ri-home-line"></i>Home</a>
-  <a href="../index2.html" class="nav__mobile-link"><i class="ri-sparkling-fill"></i>Home 2</a>
+  <div class="nav__item--dropdown">
+        <button class="nav__mobile-link active" style="background:none; border:none; cursor:pointer; font-family:inherit; width:100%; justify-content:flex-start; outline:none;" onclick="this.nextElementSibling.classList.toggle('open'); this.nextElementSibling.style.display = this.nextElementSibling.style.display==='flex'?'none':'flex'; this.nextElementSibling.style.flexDirection='column';"><i class="ri-home-line"></i>Home <i class="ri-arrow-down-s-line" style="margin-left:auto"></i></button>
+        <div class="nav__dropdown nav__mobile-dropdown" style="display:none; position:relative; top:0; box-shadow:none; border:none; background:transparent; visibility:visible; opacity:1; transform:none; min-width:100%; padding:0;">
+          <a href="../index.html" class="nav__mobile-link" style="padding-left:36px; padding-top:8px; padding-bottom:8px">Home 1</a>
+          <a href="../index2.html" class="nav__mobile-link" style="padding-left:36px; padding-top:8px; padding-bottom:8px">Home 2</a>
+        </div>
+      </div>
   <a href="about.html"    class="nav__mobile-link"><i class="ri-information-line"></i>About</a>
   <a href="services.html" class="nav__mobile-link"><i class="ri-service-line"></i>Services</a>
   <a href="blog.html"     class="nav__mobile-link"><i class="ri-article-line"></i>Blog</a>
@@ -239,12 +249,52 @@
 <footer class="footer" role="contentinfo">
   <div class="container">
     <div class="footer__grid">
-      <div class="footer__brand"><a href="../index.html" class="footer__logo"><div class="nav__logo-icon" style="background:var(--brand-gradient)"><i class="ri-armchair-line"></i></div>ErgoHome</a><p class="footer__desc">Health-first ergonomic workspace design.</p><div class="footer__socials"><a href="#" class="footer__social"><i class="ri-instagram-line"></i></a><a href="#" class="footer__social"><i class="ri-linkedin-fill"></i></a></div></div>
-      <div><p class="footer__col-title">Company</p><a href="../index.html" class="footer__link">Home</a><a href="about.html" class="footer__link">About</a><a href="services.html" class="footer__link">Services</a><a href="contact.html" class="footer__link">Contact</a></div>
-      <div><p class="footer__col-title">Quick Links</p><a href="#" class="footer__link">Privacy Policy</a><a href="#" class="footer__link">Terms of Service</a></div>
-      <div><p class="footer__col-title">Newsletter</p><form class="footer__newsletter js-newsletter-form"><input type="email" placeholder="your@email.com" required><button type="submit" class="btn btn--primary btn--full"><i class="ri-send-plane-line"></i> Subscribe</button></form></div>
+      <div class="footer__brand">
+        <a href="../index.html" class="footer__logo">
+          <div class="nav__logo-icon" style="background:var(--brand-gradient)"><i class="ri-armchair-line"></i></div>
+          ErgoHome
+        </a>
+        <p class="footer__desc">Health-first ergonomic workspace design � from assessment to installation. Trusted by 2,400+ remote professionals worldwide.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+          <a href="#" class="footer__social" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+          <a href="#" class="footer__social" aria-label="Twitter/X"><i class="ri-twitter-x-line"></i></a>
+          <a href="#" class="footer__social" aria-label="YouTube"><i class="ri-youtube-line"></i></a>
+          <a href="#" class="footer__social" aria-label="Pinterest"><i class="ri-pinterest-line"></i></a>
+        </div>
+      </div>
+      <div>
+        <p class="footer__col-title">Company</p>
+        <a href="about.html"   class="footer__link">About Us</a>
+        <a href="services.html"class="footer__link">Services</a>
+        <a href="blog.html"    class="footer__link">Blog</a>
+        <a href="booking.html" class="footer__link">Book a Call</a>
+        <a href="contact.html" class="footer__link">Contact</a>
+      </div>
+      <div>
+        <p class="footer__col-title">Services</p>
+        <a href="services.html" class="footer__link">Ergonomic Assessment</a>
+        <a href="services.html" class="footer__link">3D Room Design</a>
+        <a href="services.html" class="footer__link">Product Sourcing</a>
+        <a href="services.html" class="footer__link">Installation Support</a>
+        <a href="services.html" class="footer__link">Wellness Check-ins</a>
+      </div>
+      <div>
+        <p class="footer__col-title">Newsletter</p>
+        <p style="font-size:var(--text-sm);margin-bottom:var(--sp-4)">Ergonomic tips, product reviews, and workspace inspiration � monthly.</p>
+        <form class="footer__newsletter js-newsletter-form" data-validate>
+          <input type="email" placeholder="your@email.com" required aria-label="Newsletter email">
+          <button type="submit" class="btn btn--primary btn--full"><i class="ri-send-plane-line"></i> Subscribe</button>
+        </form>
+      </div>
     </div>
-    <div class="footer__bottom"><span>© 2025 ErgoHome. All rights reserved.</span></div>
+    <div class="footer__bottom">
+      <span>&copy;2026 ErgoHome. All rights reserved.</span>
+      <div style="display:flex;gap:var(--sp-6)">
+        <a href="#" class="footer__link" style="margin-bottom:0">Privacy Policy</a>
+        <a href="#" class="footer__link" style="margin-bottom:0">Terms of Service</a>
+      </div>
+    </div>
   </div>
 </footer>
 <button class="back-to-top" aria-label="Back to top" style="position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--brand-gradient);color:white;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-md);z-index:200;transition:all var(--transition-fast)"><i class="ri-arrow-up-line"></i></button>
@@ -313,3 +363,5 @@
 </script>
 </body>
 </html>
+
+
