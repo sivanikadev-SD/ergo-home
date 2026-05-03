@@ -550,6 +550,9 @@ h3 { font-size: clamp(1.15rem, 2.5vw, 1.65rem); font-weight: 700; }
 .accordion-icon { color: var(--brand-primary); }
 
 .tabs-nav { background: var(--bg-muted); border: 1px solid var(--border-color); border-radius: 12px; padding: 4px; }
+@media (min-width: 769px) {
+  .tabs-nav--centered { justify-content: center; }
+}
 .tab-btn { border-radius: 8px; color: var(--text-secondary); font-weight: 500; transition: all 0.2s ease; }
 .tab-btn.active { background: var(--grad-primary); color: #fff; box-shadow: 0 3px 12px rgba(34,211,238,0.25); }
 .tab-btn:hover:not(.active) { color: var(--brand-primary); background: var(--color-primary-50); }

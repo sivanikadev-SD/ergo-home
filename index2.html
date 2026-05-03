@@ -667,23 +667,21 @@
 
       <div class="nav__links">
         <div class="nav__item--dropdown">
-        <button class="nav__link active" aria-haspopup="true" aria-expanded="false" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:14px;"><i class="ri-home-line"></i>Home <i class="ri-arrow-down-s-line" style="margin-left:4px"></i></button>
+        <button class="nav__link active" aria-haspopup="true" aria-expanded="false" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:14px;">Home <i class="ri-arrow-down-s-line" style="margin-left:4px"></i></button>
         <div class="nav__dropdown">
           <a href="index.html" class="nav__dropdown-link">Home 1</a>
           <a href="index2.html" class="nav__dropdown-link">Home 2</a>
         </div>
       </div>
-        <a href="pages/about.html" class="nav__link" role="listitem"><i class="ri-information-line"></i>About</a>
-        <a href="pages/services.html" class="nav__link" role="listitem"><i class="ri-service-line"></i>Services</a>
-        <a href="pages/blog.html" class="nav__link" role="listitem"><i class="ri-article-line"></i>Blog</a>
-        <a href="pages/booking.html" class="nav__link" role="listitem"><i class="ri-calendar-line"></i>Book a Call</a>
-        <a href="pages/contact.html" class="nav__link" role="listitem"><i class="ri-mail-line"></i>Contact</a>
-        <a href="pages/dashboard.html" class="nav__link" role="listitem"><i class="ri-dashboard-line"></i>Dashboard</a>
+        <a href="pages/about.html" class="nav__link" role="listitem">About</a>
+        <a href="pages/services.html" class="nav__link" role="listitem">Services</a>
+        <a href="pages/blog.html" class="nav__link" role="listitem">Blog</a>
+        <a href="pages/booking.html" class="nav__link" role="listitem">Book a Call</a>
+        <a href="pages/contact.html" class="nav__link" role="listitem">Contact</a>
+        <a href="pages/dashboard.html" class="nav__link" role="listitem">Dashboard</a>
       </div>
 
       <div class="nav__actions">
-        <button class="rtl-toggle btn btn--ghost btn--sm" title="Switch Language/Direction"><i
-            class="ri-translate-2"></i> <span class="rtl-toggle-text">RTL</span></button>
         <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i
             class="ri-moon-line icon-moon"></i></button>
         <a href="pages/login.html" class="btn btn--primary btn--sm"><i class="ri-login-circle-line"></i>Login</a>
@@ -697,7 +695,7 @@
   <div class="nav__mobile">
     <div class="nav__mobile-links">
       <div class="nav__item--dropdown">
-        <button class="nav__mobile-link active" style="background:none; border:none; cursor:pointer; font-family:inherit; width:100%; text-align:left;" onclick="this.nextElementSibling.classList.toggle('open')"><i class="ri-home-line"></i>Home <i class="ri-arrow-down-s-line" style="margin-left:auto"></i></button>
+        <button class="nav__mobile-link active" style="background:none; border:none; cursor:pointer; font-family:inherit; width:100%; text-align:left;" onclick="this.nextElementSibling.classList.toggle('open')">Home <i class="ri-arrow-down-s-line" style="margin-left:auto"></i></button>
         <div class="nav__dropdown nav__mobile-dropdown" style="position:relative; top:0; box-shadow:none; border:none; background:transparent;">
           <a href="index.html" class="nav__mobile-link" style="padding-left:36px; margin-top:4px;">Home 1</a>
           <a href="index2.html" class="nav__mobile-link" style="padding-left:36px; margin-top:4px;">Home 2</a>
@@ -707,9 +705,8 @@
       <a href="pages/services.html" class="nav__mobile-link">Workshops</a>
       <a href="pages/blog.html" class="nav__mobile-link">Magazine</a>
       <a href="pages/contact.html" class="nav__mobile-link">Connect</a>
-      <a href="pages/dashboard.html" class="nav__mobile-link"><i class="ri-dashboard-line"></i>Dashboard</a>
+      <a href="pages/dashboard.html" class="nav__mobile-link">Dashboard</a>
       <div style="padding:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-4)">
-        <button class="rtl-toggle btn btn--ghost btn--full"><i class="ri-translate-2"></i> Toggle RTL</button>
         <a href="pages/login.html" class="btn btn--primary btn--full"><i class="ri-login-circle-line"></i>Login</a>
         <a href="pages/register.html" class="btn btn--secondary btn--full"><i class="ri-user-add-line"></i>Register</a>
       </div>
@@ -911,33 +908,39 @@
         </div>
 
         <!-- Item 3: Lighting (2×1) -->
-        <div class="bento-item bento-item--2x1" data-reveal data-reveal-delay="2">
-          <div class="bento-item__icon"><i class="ri-compass-3-line"></i></div>
-          <div class="bento-item__content">
+        <div class="bento-item bento-item--2x1" data-reveal data-reveal-delay="2" style="position:relative;overflow:hidden">
+          <div class="bento-item__content" style="position:relative;z-index:2">
+            <div class="bento-item__icon"><i class="ri-compass-3-line"></i></div>
             <h3 class="bento-item__title">Circadian Lighting Integration</h3>
             <p class="bento-item__text">Automated lighting systems that sync with your internal clock to maintain peak
               cortisol levels.</p>
           </div>
+          <img src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?w=400&auto=format&fit=crop&q=60" alt=""
+            style="position:absolute;top:0;right:0;width:180px;height:100%;object-fit:cover;opacity:0.1;mask-image:linear-gradient(to left, white, transparent);-webkit-mask-image:linear-gradient(to left, white, transparent)">
         </div>
 
         <!-- Item 4: Sound (1×1) -->
-        <div class="bento-item bento-item--1x1" data-reveal data-reveal-delay="3">
-          <div class="bento-item__icon" style="color:var(--rose)"><i class="ri-broadcast-line"></i></div>
-          <div class="bento-item__content">
+        <div class="bento-item bento-item--1x1" data-reveal data-reveal-delay="3" style="position:relative;overflow:hidden">
+          <div class="bento-item__content" style="position:relative;z-index:2">
+            <div class="bento-item__icon" style="color:var(--rose)"><i class="ri-broadcast-line"></i></div>
             <h3 class="bento-item__title">Acoustic Shielding</h3>
             <p class="bento-item__text" style="font-size:0.82rem;margin-top:4px">Engineered quiet zones that isolate
               harmful frequencies.</p>
           </div>
+          <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=300&auto=format&fit=crop&q=60" alt=""
+            style="position:absolute;bottom:0;right:0;width:100%;height:100%;object-fit:cover;opacity:0.05;z-index:1">
         </div>
 
         <!-- Item 5: Plants (1×1) -->
-        <div class="bento-item bento-item--1x1" data-reveal data-reveal-delay="4">
-          <div class="bento-item__icon" style="color:var(--green)"><i class="ri-leaf-line"></i></div>
-          <div class="bento-item__content">
+        <div class="bento-item bento-item--1x1" data-reveal data-reveal-delay="4" style="position:relative;overflow:hidden">
+          <div class="bento-item__content" style="position:relative;z-index:2">
+            <div class="bento-item__icon" style="color:var(--green)"><i class="ri-leaf-line"></i></div>
             <h3 class="bento-item__title">Biophilic Design</h3>
             <p class="bento-item__text" style="font-size:0.82rem;margin-top:4px">Living walls and curated botanics
               reduce cognitive fatigue.</p>
           </div>
+          <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=300&auto=format&fit=crop&q=60" alt=""
+            style="position:absolute;bottom:0;right:0;width:100%;height:100%;object-fit:cover;opacity:0.05;z-index:1">
         </div>
       </div>
     </div>
@@ -1099,7 +1102,7 @@
     <div class="container">
       <div class="cols-3" style="gap:16px" id="stats-row">
         <div class="stat-item" style="text-align:center;padding:32px" data-reveal>
-          <div class="stat-value" data-count="500">0</div>
+          <div class="stat-value" data-count="500" data-suffix="+">0</div>
           <div class="stat-label">Spaces Designed</div>
         </div>
         <div class="stat-item" style="text-align:center;padding:32px" data-reveal data-reveal-delay="1">
@@ -1107,7 +1110,7 @@
           <div class="stat-label">% Pain Reduction</div>
         </div>
         <div class="stat-item" style="text-align:center;padding:32px" data-reveal data-reveal-delay="2">
-          <div class="stat-value" data-count="12">0</div>
+          <div class="stat-value" data-count="12" data-suffix="+">0</div>
           <div class="stat-label">Countries Served</div>
         </div>
       </div>
