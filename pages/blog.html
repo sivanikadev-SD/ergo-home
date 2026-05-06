@@ -82,6 +82,10 @@
       <a href="dashboard.html" class="nav__link">Dashboard</a>
     </div>
     <div class="nav__actions">
+      <button class="rtl-toggle" aria-label="Toggle RTL" title="Toggle RTL">
+        <i class="ri-text-direction-r"></i>
+        <span class="rtl-toggle-text">RTL</span>
+      </button>
       <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
       <a href="login.html" class="btn btn--primary btn--sm"><i class="ri-login-circle-line"></i>Login</a>
       <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -102,7 +106,14 @@
   <a href="booking.html" class="nav__mobile-link">Book a Call</a>
   <a href="contact.html" class="nav__mobile-link">Contact</a>
   <a href="dashboard.html" class="nav__mobile-link">Dashboard</a>
-  <div style="margin-top:var(--sp-6);padding-top:var(--sp-6);border-top:1px solid var(--border-color);display:flex;flex-direction:column;gap:var(--sp-4)"><a href="login.html" class="btn btn--primary btn--full"><i class="ri-login-circle-line"></i>Login</a><a href="register.html" class="btn btn--secondary btn--full"><i class="ri-user-add-line"></i>Register</a></div>
+  <div style="margin-top:var(--sp-6);padding-top:var(--sp-6);border-top:1px solid var(--border-color);display:flex;flex-direction:column;gap:var(--sp-4)">
+    <div style="display:flex;gap:var(--sp-3);justify-content:center;margin-bottom:var(--sp-2)">
+      <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
+      <button class="rtl-toggle btn btn--ghost btn--sm" style="width:auto; padding-inline: var(--sp-4); height: 40px;"><i class="ri-text-direction-r"></i> Toggle RTL</button>
+    </div>
+    <a href="login.html" class="btn btn--primary btn--full"><i class="ri-login-circle-line"></i>Login</a>
+    <a href="register.html" class="btn btn--secondary btn--full"><i class="ri-user-add-line"></i>Register</a>
+  </div>
 </div>
 
 <main id="main-content">

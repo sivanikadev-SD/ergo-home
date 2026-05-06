@@ -682,12 +682,17 @@
       </div>
 
       <div class="nav__actions">
+        <button class="rtl-toggle" aria-label="Toggle RTL" title="Toggle RTL">
+          <i class="ri-text-direction-r"></i>
+          <span class="rtl-toggle-text">RTL</span>
+        </button>
         <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i
             class="ri-moon-line icon-moon"></i></button>
         <a href="pages/login.html" class="btn btn--primary btn--sm"><i class="ri-login-circle-line"></i>Login</a>
         <button class="nav__hamburger" aria-label="Menu"><span class="nav__hamburger-line"></span><span
             class="nav__hamburger-line"></span></button>
       </div>
+
     </div>
   </nav>
 
@@ -707,9 +712,14 @@
       <a href="pages/contact.html" class="nav__mobile-link">Connect</a>
       <a href="pages/dashboard.html" class="nav__mobile-link">Dashboard</a>
       <div style="padding:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-4)">
+        <div style="display:flex;gap:var(--sp-3);justify-content:center;margin-bottom:var(--sp-2)">
+          <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
+          <button class="rtl-toggle btn btn--ghost btn--sm" style="width:auto; padding-inline: var(--sp-4); height: 40px;"><i class="ri-text-direction-r"></i> Toggle RTL</button>
+        </div>
         <a href="pages/login.html" class="btn btn--primary btn--full"><i class="ri-login-circle-line"></i>Login</a>
         <a href="pages/register.html" class="btn btn--secondary btn--full"><i class="ri-user-add-line"></i>Register</a>
       </div>
+
     </div>
   </div>
 

@@ -66,10 +66,12 @@ const RTLManager = {
 
   init() {
     const stored = localStorage.getItem(this.KEY);
-    if (stored) this.apply(stored);
-
-    // Initial sync
-    this.syncUI(stored || 'ltr');
+    if (stored) {
+      this.apply(stored);
+    } else {
+      // Default to LTR
+      this.syncUI('ltr');
+    }
 
     // Handle toggle clicks
     document.addEventListener('click', (e) => {
@@ -90,17 +92,33 @@ const RTLManager = {
 
   toggle() {
     const current = document.documentElement.getAttribute('dir') || 'ltr';
-    this.apply(current === 'rtl' ? 'ltr' : 'rtl');
+    const next = current === 'rtl' ? 'ltr' : 'rtl';
+    this.apply(next);
+    
+    // Show toast for feedback
+    if (window.ErgoHome && window.ErgoHome.Toast) {
+      window.ErgoHome.Toast.show(`Layout switched to ${next.toUpperCase()}`, 'success');
+    }
   },
 
   syncUI(dir) {
+    const isRTL = dir === 'rtl';
     document.querySelectorAll('.rtl-toggle').forEach(btn => {
-      btn.classList.toggle('active', dir === 'rtl');
+      btn.classList.toggle('active', isRTL);
+      btn.setAttribute('aria-label', isRTL ? 'Switch to LTR' : 'Switch to RTL');
+      btn.setAttribute('title', isRTL ? 'LTR Mode' : 'RTL Mode');
+      
       const text = btn.querySelector('.rtl-toggle-text');
-      if (text) text.textContent = dir === 'rtl' ? 'LTR' : 'RTL';
+      if (text) text.textContent = isRTL ? 'LTR' : 'RTL';
+      
+      const icon = btn.querySelector('i');
+      if (icon) {
+        icon.className = isRTL ? 'ri-text-direction-l' : 'ri-text-direction-r';
+      }
     });
   }
 };
+
 
 /* ==========================================================================
    3. Navigation
