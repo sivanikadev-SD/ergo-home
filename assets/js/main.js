@@ -113,7 +113,7 @@ const RTLManager = {
       
       const icon = btn.querySelector('i');
       if (icon) {
-        icon.className = isRTL ? 'ri-text-direction-l' : 'ri-text-direction-r';
+        icon.className = 'ri-arrow-left-right-line';
       }
     });
   }

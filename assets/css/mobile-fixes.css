@@ -177,6 +177,7 @@
 
   /* Prevent 360px/375px navbar overflow by hiding actions duplicated in mobile menu */
   .nav__actions .rtl-toggle,
+  .nav__actions .theme-toggle,
   .nav__actions .btn--primary {
     display: none !important;
   }
