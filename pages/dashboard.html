@@ -20,7 +20,6 @@
   <link rel="stylesheet" href="../assets/css/dark-mode.css">
   <link rel="stylesheet" href="../assets/css/premium-theme.css">
   <link rel="stylesheet" href="../assets/css/mobile-fixes.css">
-  <link rel="stylesheet" href="../assets/css/rtl.css">
   <style>
     :root { --sidebar-width: 280px; }
     body { overflow-x: hidden; }
@@ -267,8 +266,8 @@
       <div style="display:flex;gap:var(--sp-3);align-items:center;justify-content:space-between;margin-bottom:var(--sp-3)">
         <div style="display:flex;gap:var(--sp-2)">
           <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
-          <button class="rtl-toggle" aria-label="Toggle RTL" title="Toggle RTL" style="background:none; border:1px solid var(--border-color); border-radius:var(--radius-md); width:36px; height:36px; cursor:pointer; color:var(--text-primary);"><i class="ri-arrow-left-right-line"></i></button>
-        </div>
+        <button class="rtl-toggle btn btn--ghost btn--sm" aria-label="Toggle RTL" style="padding-inline: var(--sp-4); height: 40px;"><i class="ri-arrow-left-right-line"></i></button>
+    </div>
         <a href="../index.html" class="btn btn--ghost btn--sm"><i class="ri-external-link-line"></i> Main Site</a>
       </div>
       <button id="logout-btn" onclick="handleLogout()" class="btn btn--full" style="background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.25);border-radius:var(--radius-lg);font-weight:600;font-size:var(--text-sm);display:flex;align-items:center;justify-content:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-4);width:100%;cursor:pointer;transition:all 0.2s ease">
@@ -297,7 +296,7 @@
           <div class="notif-dropdown" id="notif-dropdown"></div>
         </div>
         <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
-        <button class="rtl-toggle" aria-label="Toggle RTL" title="Toggle RTL" style="background:none; border:1px solid var(--border-color); border-radius:var(--radius-md); width:40px; height:40px; cursor:pointer; color:var(--text-secondary); display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all var(--transition-fast);"><i class="ri-arrow-left-right-line"></i></button>
+        <button class="rtl-toggle btn btn--ghost btn--sm" aria-label="Toggle RTL" style="padding-inline: var(--sp-3);"><i class="ri-arrow-left-right-line"></i></button>
         <img src="https://i.pravatar.cc/40?img=32" alt="Sarah K." style="width:36px;height:36px;border-radius:50%;object-fit:cover;cursor:pointer;border:2px solid var(--brand-primary)">
       </div>
     </div>
@@ -556,10 +555,10 @@
           <div style="display:flex;align-items:center;justify-content:space-between;padding-block:var(--sp-4);border-bottom:1px solid var(--border-color)">
             <div><div style="font-weight:600;font-size:var(--text-sm)">Dark Mode</div><div style="font-size:var(--text-xs);color:var(--text-muted)">Toggle between light and dark theme</div></div>
             <button class="theme-toggle" aria-label="Toggle dark mode"><i class="ri-sun-line icon-sun"></i><i class="ri-moon-line icon-moon"></i></button>
-          </div>
+          <button class="rtl-toggle btn btn--ghost btn--sm" aria-label="Toggle RTL" style="padding-inline: var(--sp-4); height: 40px;"><i class="ri-arrow-left-right-line"></i></button>
+    </div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding-block:var(--sp-4);border-bottom:1px solid var(--border-color)">
             <div><div style="font-weight:600;font-size:var(--text-sm)">RTL Layout</div><div style="font-size:var(--text-xs);color:var(--text-muted)">Enable right-to-left for Arabic / Hebrew</div></div>
-            <button class="rtl-toggle btn btn--ghost btn--sm"><i class="ri-arrow-left-right-line"></i> Toggle RTL</button>
           </div>
           <div style="padding-top:var(--sp-6)">
             <h4 style="margin-bottom:var(--sp-5)">Notifications</h4>
